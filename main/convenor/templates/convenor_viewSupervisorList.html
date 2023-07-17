@@ -1,0 +1,59 @@
+{% extends "convenor.html" %}
+
+{% block greeting %}
+
+{% endblock %}
+
+{% block content %}
+
+<form method="post">
+  <div class="row">
+    <div class="col">
+      <h2>Supervisor List</h2>
+    </div>
+    <div class="col">
+      <input id="staffID" name="staffID" type="number" class="form-control" placeholder="Staff ID" aria-label="Staff ID">
+    </div>
+    <div class="col">
+      <input id="staffName" name="staffName" type="text" class="form-control" placeholder="Staff Name" aria-label="Staff Name">
+    </div>
+    <div class="col">
+      <button type="submit" class="btn btn-primary" formaction="/convenor/supervisorlist">Search</button>
+    </div>
+  </div>
+</form>
+
+<table class="table" style="padding: 20px;">
+  <thead>
+    <tr style="background-color: #0f65bc; color: white;">
+      <th scope="col">Staff ID</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Email</th>
+      <th scope="col">Room</th>
+      <th scope="col">Department</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if supervisorList %}
+      {% for supervisor in supervisorList %}
+        <tr>
+          <th scope="row">{{ supervisor[0] }}</th>
+          <td>{{ supervisor[1] }}</td>
+          <td>{{ supervisor[2] }}</td>
+          <td>{{ supervisor[3] }}</td>
+          <td>{{ supervisor[4] }}</td>
+          <td>{{ supervisor[5] }}</td>
+          <td>{{ supervisor[6] }}</td>
+        </tr>
+      {% endfor %}
+    {% else %}
+      <tr>
+        <td colspan="7">No result found</td>
+      </tr>
+    {% endif %}
+
+  </tbody>
+</table>
+{% endblock %} 

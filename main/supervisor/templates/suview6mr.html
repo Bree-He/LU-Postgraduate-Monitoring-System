@@ -1,0 +1,883 @@
+{% extends "supervisor.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="col">
+        {%if currentSuperType == 'Main Supervisor' and report_progress == 0 %}
+            {% for pro in profile %}
+            <form method="POST" action="{{ url_for('supervisor.su_view_6mr') }}">
+                <input type="hidden" name="report_id" value="{{ report_id }}">
+                <!-- Approval and Reject buttons -->
+                <div class="row justify-content-end mt-2">
+                    <div class="col-2 text-right">
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</button>
+                    </div>
+                    <div class="col-2 text-right">
+                        <button type="submit" name="approval" class="btn btn-success">Approve</button>
+                    </div>
+                    <h3>{{ pro[2] + " " + pro[1] }}</h3>
+                </div>
+            </form>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="section-a-tab" data-bs-toggle="tab" data-bs-target="#section-a-tab-pane" type="button" role="tab" aria-controls="secion-a-tab-pane" aria-selected="true">Section A</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="section-b-tab" data-bs-toggle="tab" data-bs-target="#section-b-tab-pane" type="button" role="tab" aria-controls="section-b-tab-pane" aria-selected="false">Section B</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="section-c-tab" data-bs-toggle="tab" data-bs-target="#section-c-tab-pane" type="button" role="tab" aria-controls="section-c-tab-pane" aria-selected="false">Section C</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="section-d-tab" data-bs-toggle="tab" data-bs-target="#section-d-tab-pane" type="button" role="tab" aria-controls="section-d-tab-pane" aria-selected="false">Section D</button>
+        </li>
+
+    </ul>
+</div>    
+
+<div class="tab-content" id="myTabContent">
+    <!-- section A -->
+        <div class="tab-pane fade show active" id="section-a-tab-pane" role="tabpanel" aria-labelledby="section-a-tab" tabindex="0">
+        <br>
+        <h2 class="sec_name mb-5">Section A: Student Record</h2>
+            <div class="container mt-3 mx-auto">
+                <table class="table table-bordered text-center">
+                    <tr>
+                        <th class="table-primary" colspan="4">Profile</th>
+                    </tr>
+                    <tr class="table-light">
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Enrollment Date</th>
+                        <th>Address</th>
+                    </tr>
+                    {% for pro in profile%}
+                        <tr>
+                            <td>{{pro[0]}}</td>
+                            <td>{{pro[2]}} {{pro[1]}}</td>
+                            <td>{{pro[3]}}</td>
+                            <td>{{pro[4]}}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr class="table-light">
+                        <th>Phone</th>
+                        <th>Lincoln Email</th>
+                        <th>Other Email</th>
+                        <th>Study Type</th>
+                    </tr>
+                    {% for pro in profile%}
+                        <tr>
+                            <td>{{pro[5]}}</td>
+                            <td>{{pro[6]}}</td>
+                            <td>{{pro[7]}}</td>
+                            <td>{{pro[8]}}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr class="table-light">
+                        <th colspan="4">Thesis Title</th>
+                    </tr>
+                    {% for pro in profile%}
+                    <tr>
+                        <td colspan="4">{{pro[10]}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <table class="table table-bordered text-center">    
+                    <tr>
+                        <th class="table-primary" colspan="4">Scholarship</th>
+                    </tr>
+                    <tr class="table-light">
+                        <th>Scholarship Name</th>
+                        <th>Value</th>
+                        <th>Tenure</th>
+                        <th>End Date</th>
+                    </tr>
+                    {% if scholarship %}
+                        {% for s in scholarship%}
+                            <tr>
+                                <td>{{s[2]}}</td>
+                                <td>{{s[3]}}</td>
+                                <td>{{s[4]}}</td>
+                                <td>{{s[6]}}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </table>
+                <table class="table table-bordered text-center">    
+                    <tr>
+                        <th class="table-primary" colspan="3">Employment</th>
+                    </tr>
+                    <tr class="table-light">
+                        <th>Company</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                    </tr>
+                    {% if employment %}
+                        {% for item in employment%}
+                            <tr>
+                                <td class="col-4">{{item[2]}}</td>
+                                <td class="col-4">{{item[3]}}</td>
+                                <td class="col-4">{{item[4]}}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </table>
+                <table class="table table-bordered text-center">    
+                    <tr>
+                        <th class="table-primary" colspan="{{ 2 + super3|length }}">Supervisor</th>
+                    </tr>
+                    <tr class="table-light">
+                        <th>Main Supervisor</th>
+                        <th>Associate Supervisor</th>
+                        {% for value in super3 %}
+                            <th>Other Supervisor</th>
+                        {% endfor %}
+                    </tr>
+                        <tr>
+                            <td>{{super1[0]}}</td>
+                            <td>{% if super2 %}{{ super2[0] }}{% else %}{% endif %}</td>
+                            {% for value in super3 %}
+                                <td>{{value[0]}}</td>
+                            {% endfor %}
+                        </tr>
+                </table>
+            </div>
+        </div>
+    <!-- section B -->
+        <div class="tab-pane fade" id="section-b-tab-pane" role="tabpanel" aria-labelledby="section-b-tab" tabindex="0">
+        <br>
+        <h2 class="sec_name mb-5">Section B: Milestones</h2>
+            <div class="container">
+                <table class="table table-bordered text-center">
+                    <tr>
+                        <th class="table-primary" colspan="3">Progress</th>
+                    </tr>
+                    <tr class="table-light">
+                        <th></th>
+                        <th>Not Completed</th>
+                        <th>Completed Date</th>
+                    </tr>
+                    <tr>
+                        <td>Induction Programme (Compulsory)</td>
+                        {% if section_b[0][1] == None %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                        {% if section_b[0][1] != None %}
+                            <td>{{section_b[0][1]}}</td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                    </tr>        
+                    <tr>
+                        <td>Mutual Expectations Agreement (Compulsory)</td>
+                        {% if section_b[0][2] == None %}
+                        <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                        {% if section_b[0][2] != None %}
+                            <td>{{section_b[0][2]}}</td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Kaupapa Māori Research MEA (Compulsory if relevant)</td>
+                        {% if section_b[0][3] == None %}
+                        <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                        {% if section_b[0][3] != None %}
+                            <td>{{section_b[0][3]}}</td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Intellectual Property Agreement (Compulsory if relevant)</td>
+                        {% if section_b[0][4] == None %}
+                        <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                        {% if section_b[0][4] != None %}
+                            <td>{{section_b[0][4]}}</td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Thesis proposal seminar (Compulsory)</td>
+                        {% if section_b[0][5] == None %}
+                        <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                        {% if section_b[0][5] != None %}
+                            <td>{{section_b[0][5]}}</td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Research Proposal Approved by appropriate Faculty/Centre Postgraduate or equivalent Committee (Compulsory)</td>
+                        {% if section_b[0][6] == None %}
+                        <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                        {% if section_b[0][6] != None %}
+                            <td>{{section_b[0][6]}}</td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Lincoln University PG conference presentation</td>
+                        {% if section_b[0][7] == None %}
+                        <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                        {% if section_b[0][7] != None %}
+                            <td>{{section_b[0][7]}}</td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Thesis Results Seminar (Strongly recommended)</td>
+                        {% if section_b[0][8] == None %}
+                        <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                        {% if section_b[0][8] != None %}
+                            <td>{{section_b[0][8]}}</td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                    </tr>
+                </table>
+                <table class="table table-bordered text-center">    
+                    <tr>
+                        <th class="table-primary" colspan="4">Approved by any of the Lincoln University Committees</th>
+                    </tr>
+                    <tr class="table-light">
+                        <th></th>
+                        <th>Needed</th>
+                        <th>Approval Given</th>
+                        <th>Not Needed</th>
+                    </tr>
+                    <tr>
+                        <td>Human Ethics Committee</td>
+                        {% if section_b[0][9] == 'Needed' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+            
+                        {% if section_b[0][9] == 'Approved' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+            
+                        {% if section_b[0][9] == 'Not Needed' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Health and Safety Committee</td>
+                        {% if section_b[0][10] == 'Needed' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+            
+                        {% if section_b[0][10] == 'Approved' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+            
+                        {% if section_b[0][10] == 'Not Needed' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Animal Ethics Committee</td>
+                        {% if section_b[0][11] == 'Needed' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+            
+                        {% if section_b[0][11] == 'Approved' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+            
+                        {% if section_b[0][11] == 'Not Needed' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Institutional Biological Safety Committee</td>
+                        {% if section_b[0][12] == 'Needed' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+            
+                        {% if section_b[0][12] == 'Approved' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+            
+                        {% if section_b[0][12] == 'Not Needed' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Radiation Protection Officer</td>
+                        {% if section_b[0][13] == 'Needed' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                
+                        {% if section_b[0][13] == 'Approved' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                
+                        {% if section_b[0][13] == 'Not Needed' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                    </tr>
+                </table>
+                <table class="table table-bordered text-center">    
+                    <tr>
+                        <th class="table-primary" colspan="7">Reporting Progress</th>
+                    </tr>
+                    <tr class="table-light">
+                        <th class="col-1">Time from start</th>
+                        <th>6 Months</th>
+                        <th>12 Months</th>
+                        <th>18 Months</th>
+                        <th>24 Months</th>
+                        <th>30 Months</th>
+                        <th>36 Months</th>
+                    </tr>
+                    <tr>
+                        <th>Report</th>
+                        {% if section_b[0][14] == '1' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                        {% if section_b[0][14] == '2' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                        {% if section_b[0][14] == '3' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                        {% if section_b[0][14] == '4' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                        {% if section_b[0][14] == '5' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                        {% if section_b[0][14] == '6' %}
+                            <td><i class="fa-solid fa-check"></i></td>
+                        {% else %}
+                            <td><i class="fa-solid fa-xmark"></i></td>
+                        {% endif %}
+                    </tr>
+                    <tr class="table-light">
+                        <th>Mile-stone</th>
+                        <th>Proposal submitted and seminar held</th>
+                        <th>Proposal approved; Data collection started</th>
+                        <th>Mid term PhD progress evaluation</th>
+                        <th>Data collected; Analysis  and writing begun</th>
+                        <th>Analysis done; Half thesis written</th>
+                        <th>Thesis submitted for examination; Research seminar held</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    <!-- section C -->
+        <div class="tab-pane fade" id="section-c-tab-pane" role="tabpanel" aria-labelledby="section-c-tab" tabindex="0">
+            <br>
+            <h2 class="sec_name mb-5">Section C: Evaluation of Faculty (or Centre) performance</h2>
+            <div class="container mt-3 mx-auto">
+                <table class="table table-bordered text-center">    
+                    <tr>
+                        <th class="table-primary" colspan="3">Rate each of the following as they affect your study within the Faculty (or Centre)</th>
+                    </tr>
+                    <tr class="table-light">
+                        <th class="col-4"></th>
+                        <th>Rate</th>
+                        <th class="col-7">Comments</th>
+                    </tr>
+                    <tr>
+                        <td>Access to supervisors – principal</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[1] }}</td>
+                            <td>{{ rate[2] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Access to supervisors – associate/others</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[3] }}</td>
+                            <td>{{ rate[4] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Supervisor expertise– principal</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[5] }}</td>
+                            <td>{{ rate[6] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Supervisor expertise – associate/others</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[7] }}</td>
+                            <td>{{ rate[8] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Quality of supervisor feedback – principal</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[9] }}</td>
+                            <td>{{ rate[10] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Quality of supervisor feedback – associate/ others</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[11] }}</td>
+                            <td>{{ rate[12] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Timeliness of supervisor feedback – principal</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[13] }}</td>
+                            <td>{{ rate[14] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Timeliness of supervisor feedback – associate/ others</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[15] }}</td>
+                            <td>{{ rate[16] }}</td>
+                        {% endfor %}
+                        </tr>
+                    <tr>
+                        <td>Courses available</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[17] }}</td>
+                            <td>{{ rate[18] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Workspace</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[19] }}</td>
+                            <td>{{ rate[20] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Computer facilities</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[21] }}</td>
+                            <td>{{ rate[22] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>ITS support</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[23] }}</td>
+                            <td>{{ rate[24] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Research software</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[25] }}</td>
+                            <td>{{ rate[26] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Library facilities</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[27] }}</td>
+                            <td>{{ rate[28] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Teaching & Learning Centre support</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[29] }}</td>
+                            <td>{{ rate[30] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Statistical support</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[31] }}</td>
+                            <td>{{ rate[32] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Research equipment</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[33] }}</td>
+                            <td>{{ rate[34] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Technical support</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[35] }}</td>
+                            <td>{{ rate[36] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Financial resources</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[37] }}</td>
+                            <td>{{ rate[38] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Other (Please Specify)</td>
+                        {% for rate in section_c %}
+                            <td>{{ rate[39] }}</td>
+                            <td>{{ rate[40] }}</td>
+                        {% endfor %}
+                    </tr>
+                </table>
+                <table class="table table-bordered text-center">    
+                    <tr>
+                        <th class="table-primary" colspan="2">Communicate With Supervisor</th>
+                    </tr>
+                    <tr class="table-light">
+                        <th>Questions</th>
+                        <th>Answers</th>
+                    </tr>
+                    <tr>
+                        <th>How frequently do you have a meeting with your supervisor?</th>
+                        <td>{{ section_c[0][41] }}</td>
+                    </tr>
+                    <tr>
+                        <th>What is the usual period for receiving feedback from your supervisor on submitted materials?</th>
+                        <td>{{ section_c[0][42] }}</td>
+                    </tr>
+                    <tr>
+                        <th>How do you receive your feedback from your supervisor?</th>
+                        <td>{{ section_c[0][43] }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    <!-- section D -->
+        <div class="tab-pane fade" id="section-d-tab-pane" role="tabpanel" aria-labelledby="section-d-tab" tabindex="0">
+            <br>
+            <h2 class="sec_name mb-5">Section D: Progress and Achievements</h2>
+            <div class="container mt-3 mx-auto">
+                <table class="table table-bordered text-center">    
+                    <tr>
+                        <th class="table-primary" colspan="3">Report on your Research Objectives for the last Six Months</th>
+                    </tr>
+                    <tr class="table-light">
+                        <th>Research Objectives</th>
+                        <th>Status</th>
+                        <th>Comments – Explain, where relevant, why particular activities are not completed</th>
+                    </tr>
+                    {% for t1 in t1_list%}
+                        <tr>
+                            <td>{{ t1.research_objectives }}</td>
+                            <td>{{ t1.status }}</td>
+                            <td>{{ t1.comments }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr class="table-light">
+                        <th colspan="3">Have any of these objectives changed or been modified since your Proposal?  If so, how, and why?</th>
+                    </tr>
+                    <tr>
+                        <td colspan="3">{{ section_d[0][2] }}</td>
+                    </tr>
+                </table>
+                <table class="table table-bordered text-center">    
+                    <tr>
+                        <th class="table-primary">Evaluation of effects of COVID-19 on research progress</th>
+                    </tr>
+                    <tr class="table-light">
+                        <th>Effects</th>
+                    </tr>
+                    {% for t2 in t2_list%}
+                        <tr>
+                            <td>{{ t2.effects }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <table class="table table-bordered text-center">    
+                    <tr>
+                        <th class="table-primary">Other Significant Academic Achievements in the last Six Months</th>
+                    </tr>
+                    <tr class="table-light">
+                        <th>Achievements</th>
+                    </tr>
+                    {% for t3 in t3_list%}
+                        <tr>
+                            <td>{{ t3.achievements }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <table class="table table-bordered text-center">    
+                    <tr>
+                        <th class="table-primary" colspan="3">Research Objectives for the next Six Months</th>
+                    </tr>
+                    <tr class="table-light">
+                        <th>Research Objectives</th>
+                        <th>Target Completion Date</th>
+                        <th>Anticipated problems in achieving objectives</th>
+                    </tr>
+                    {% for t4 in t4_list%}
+                        <tr>
+                            <td>{{ t4.research_objectives }}</td>
+                            <td class="col-2">{{ t4.target_date }}</td>
+                            <td>{{ t4.problems }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <table class="table table-bordered text-center">    
+                    <tr>
+                        <th class="table-primary" colspan="3">Expected Research Expenditure for the next Six Months</th>
+                    </tr>
+                    <tr class="table-light">
+                        <th>Item</th>
+                        <th>Amount</th>
+                        <th>Notes</th>
+                    </tr>
+                    {% for t5 in t5_list %}
+                        <tr>
+                            <td>{{ t5.item }}</td>
+                            <td class="price">${{ t5.amount }}</td>
+                            <td>{{ t5.notes }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td class="text-align-right">TOTAL EXPENDITURE:</td>
+                        <td class="price" colspan="2">${{ total_expenditure }}</td>
+                    </tr>
+                </table>
+                <table class="table table-bordered text-center">
+                    <tr class="table-light">
+                        <th colspan="2">Comments</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2">{{ section_d[0][7] }}</td>
+                    </tr>
+                    <tr class="table-light">
+                        <th class="col-6">Student Name</th>
+                        <th class="col-6">Report Submit Date</th>
+                    </tr>
+                    <tr>
+                        <td>{{ section_d[0][8] }}</td>
+                        <td>{{ section_d[0][9] }}</td>
+                    </tr>
+                </table>    
+            </div>
+        </div>
+<!-- section E supervisor -->
+    <div class="tab-pane fade" id="section-e-super-tab-pane" role="tabpanel" aria-labelledby="section-e-super-tab" tabindex="0">
+        <br>
+        <h2 class="sec_name mb-5">Section E: Assessment of Student by Supervisor(s)</h2>
+        <div class="container mt-3 mx-auto">
+            {% for super in section_e %}
+                {% if super[5] == 'Main Supervisor' %}
+                    <table class="table text-center">   
+                        <tr>
+                            <th>{{super[5]}}: {{super[3]}}</th>
+                            <th>Assessed Date: {{super[13]}}</th>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered text-center">   
+                        <tr>
+                            <th class="table-primary" colspan="2">Rate the student’s performance</th>
+                        </tr>
+                        <tr class="table-light">
+                            <th>Questions</th>
+                            <th class="col-1">Answers</th>
+                        </tr>
+                        <tr>
+                            <th>How do you rate the student’s overall progress in the last 6 months</th>
+                            <td>{{super[6]}}</td>
+                        </tr>
+                            <th>How do you rate the student’s overall progress in terms of the 3-year PhD track</th>
+                            <td>{{super[7]}}</td>
+                        </tr>
+                        </tr>
+                            <th>How would you rate the quality of the student’s academic work, e.g., research writing</th>
+                            <td>{{super[8]}}</td>
+                        </tr>
+                        </tr>
+                            <th>Student’s technical skill/s to complete the project</th>
+                            <td>{{super[9]}}</td>
+                        </tr>
+                        </tr>
+                            <th>How would you rate the student’s likelihood of achieving the next 6-months objectives</th>
+                            <td>{{super[10]}}</td>
+                        </tr>
+                        </tr>
+                            <th>If a progress review meeting has taken place in the period covered by this report, have any recommendations from that meeting been carried out?</th>
+                            <td>{{super[11]}}</td>
+                        </tr>
+                        <tr class="table-light">
+                            <th colspan="2">Comments</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{{super[12]}}</td>
+                        </tr>
+                    </table>
+                {% else%}
+                    <table class="table text-center">   
+                        <tr>
+                            <th>{{super[5]}}: {{super[3]}}</th>
+                            <th>Assessed Date: {{super[13]}}</th>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered text-center">   
+                        <tr>
+                            <th class="table-primary" colspan="2">Rate the student’s performance</th>
+                        </tr>
+                        <tr class="table-light">
+                            <th>Questions</th>
+                            <th class="col-1">Answers</th>
+                        </tr>
+                        <tr>
+                            <th>How do you rate the student’s overall progress in the last 6 months</th>
+                            <td>{{super[6]}}</td>
+                        </tr>
+                            <th>How do you rate the student’s overall progress in terms of the 3-year PhD track</th>
+                            <td>{{super[7]}}</td>
+                        </tr>
+                        </tr>
+                            <th>How would you rate the quality of the student’s academic work, e.g., research writing</th>
+                            <td>{{super[8]}}</td>
+                        </tr>
+                        </tr>
+                            <th>Student’s technical skill/s to complete the project</th>
+                            <td>{{super[9]}}</td>
+                        </tr>
+                        </tr>
+                            <th>How would you rate the student’s likelihood of achieving the next 6-months objectives</th>
+                            <td>{{super[10]}}</td>
+                        </tr>
+                        <tr class="table-light">
+                            <th colspan="2">Comments</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{{super[12]}}</td>
+                        </tr>
+                    </table>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+<!-- section E convenor -->
+    <div class="tab-pane fade" id="section-e-convenor-tab-pane" role="tabpanel" aria-labelledby="section-e-convenor-tab" tabindex="0">
+        <br>
+        <h2 class="sec_name mb-5">Section E: Assessment of Student by Department/School PG Convenor</h2>
+        <div class="container mt-3 mx-auto">
+            {% for convenor in section_e_convenor %}
+                <table class="table text-center">   
+                    <tr>
+                        <th>Convenor: {{convenor[0]}}</th>
+                        <th>Assessed Date: {{convenor[1]}}</th>
+                    </tr>
+                </table>
+                <table class="table table-bordered text-center">   
+                    <tr>
+                        <th class="table-primary" colspan="2">Rate the student’s performance</th>
+                    </tr>
+                    <tr class="table-light">
+                        <th>Highlight any area needing closer consideration</th>
+                        <th>Rating</th>
+                    </tr>
+                    <tr>
+                        <td>{{convenor[2]}}</td>
+                        {% if convenor[3] == 'G' %}
+                            <td><div style="width: 20px; height: 20px; background-color: green; margin: auto;"></div></td>
+                        {% elif convenor[3] == 'O' %}
+                            <td><div style="width: 20px; height: 20px; background-color: orange; margin: auto;"></div></td>
+                        {%  elif convenor[3] == 'R' %}
+                            <td><div style="width: 20px; height: 20px; background-color: red; margin: auto;"></div></td>
+                        {% else%}
+                            <td>N/A</td>
+                        {% endif %}
+                    </tr>
+                </table>
+            {% endfor %}
+        </div>
+    </div> 
+</div>
+<!-- Modal -->
+<div class="modal fade" id="rejectModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reject Reason</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+            </div>
+            <form action="{{ url_for('supervisor.su_view_6mr') }}" method="post">
+                <div class="modal-body">
+                    <label for="rejectReason">Please enter the reject reason:</label>
+                    <input type="hidden" name="report_id" value="{{ report_id }}">
+                    <textarea type="text" name="reject_reason" id="rejectReason" class="form-control" required></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" name="reject" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

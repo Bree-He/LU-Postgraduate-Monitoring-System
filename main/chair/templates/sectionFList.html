@@ -1,0 +1,55 @@
+{% extends "chair.html" %}
+
+{% block greeting %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+ 
+<h2>Section F Submission</h2>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Report ID</th>
+      <th scope="col">Student Name</th>
+      <th scope="col">Supervisor Name</th>
+      <th scope="col">Talk To</th>
+      <th scope="col">Comments</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if sectionFList %}
+      {% for sectionF in sectionFList %}
+        <tr>
+          <th scope="row">{{ sectionF[0] }}</th>
+          <td>{{ sectionF[1] }}</a></td>
+          <td>{{ sectionF[2] }}</td>
+          <td>{{ sectionF[4] }}</td>
+          <td>{{ sectionF[3] }}</td>
+          <td>
+            <a href="{{ url_for('chair.respondSectionF', report_id=sectionF[0]) }}">
+              <button class="btn btn-primary">Response</button>
+            </a>
+          </td>
+          <td>
+            <a href="{{ url_for('chair.view6MrDetail', report_id=sectionF[0], student_id=sectionF[8]) }}">
+              <button class="btn btn-primary">View</button>
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    {% else %}
+      <tr>
+        <td colspan="7">No result found</td>
+      </tr>
+    {% endif %}
+
+  </tbody>
+</table>
+</div>
+{% endblock %}

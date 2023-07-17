@@ -1,0 +1,56 @@
+.topbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    background: linear-gradient(to right, rgba(19, 19, 240, 0.9), rgba(70, 70, 236, 0.5));
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo img {
+    height: 90px;
+    margin-right: 10px;
+  }
+  h1{
+    color: aliceblue;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+  }
+
+  h2, h3 {
+    color: #0066CC;
+    font-weight: bolder;
+    font-size: 4ch;
+  }
+
+  .row, table {
+    padding: 20px;
+  }
+
+  thead {
+    background-color: #0f65bc;
+    color: white;
+  }
+
+  .footer {
+    position: absolute;
+    color: aliceblue;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(to right, rgba(19, 19, 240, 0.9), rgba(70, 70, 236, 0.5));
+  }
+  
+  .link{
+    color: aliceblue;
+  }
+  /* view 6mr */
+
+.sec_name{
+  color: #0066CC;
+  font-weight: bolder;
+  text-align: center;
+}

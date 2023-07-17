@@ -1,0 +1,81 @@
+{% extends "student.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+{% if success_message %}
+<!-- Show a success message if it exists -->
+<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+  {{ success_message }}
+</div>
+{% endif %}
+<div class="container">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link " aria-current="page" href="{{ url_for('student.profile') }}">Profile</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="#">Scholarship</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url_for('student.employ') }}">Employment</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link"  href="{{ url_for('student.super') }}">Supervisor</a>
+    </li>
+  </ul>
+</div>
+<br>
+<div class="container mt-3 mx-auto">
+    <div class="col-md-10 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                {% for student in profile %}
+                <h5 class="card-title text-center">{{ student[2] }} {{ student[1] }}</h5>           
+                {% endfor %}     
+                <hr>
+                <table class="table table-hover" >
+                    <thead>
+      <tr>
+        <th >Name</th>
+        <th >Value</th>
+        <th >Tenure</th>
+        <th >Starte Date</th>
+        <th >End Date</th>
+        <th> Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if scholar %}
+        {% for scholarship in scholar %}
+          <tr>
+            <td>{{ scholarship[2] }}</td>
+            <td>$ {{ scholarship[3] }}</td>
+            <td>{{ scholarship[4] }}</td>
+            <td>{{ scholarship[5] }}</td>
+            <td>{{ scholarship[6] }}</td>
+            <td> <!-- add a new column for the edit button -->
+              <button type="submit"  class="btn btn-outline-primary btn-sm"><a class="b" href="{{ url_for('student.scholaredit', sid=scholarship[0]) }}">Edit</a></button>
+            </td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="7">No scholarship record found</td>
+        </tr>
+      {% endif %}
+  
+    </tbody>
+  </table>
+  <div class="d-grid gap-2 col-1 mx-auto">
+  <button type="submit"  class="btn btn-outline-primary btn-sm "><a class="" href="{{url_for('student.savescholar') }}">Add</a></button>
+  </div>
+  
+</div>
+</div>
+</div>
+</div>
+
+
+<br>
+{% endblock %}
+ 

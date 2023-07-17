@@ -1,0 +1,70 @@
+{% extends "admin.html" %}
+{% block greeting %}{% endblock %}
+{% block content %}
+<div class="col">
+  <h2>Overdue Report Status</h2>
+</div>
+<br>
+<div class="container">
+  <table class="table table-bordered text-center table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Report ID</th>
+        <th scope="col">Student Section ABCD</th>
+        <th scope="col">Student Section F</th>
+        <th scope="col">Supervisor Approved</th>
+        <th scope="col">Supervisor Section E</th>
+        <th scope="col">Convenor Section E</th>
+        <th scope="col">Current Status</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% if overduelist %}
+            {% for item in overduelist %}
+            <tr>
+                <th scope="row">{{ item[0] }}</th>
+                {% if item[1] == 0 %}
+                <td><a href="{{ url_for('admin.checkStudentABCD',  report_id = item[0])}}">Student need to complete section ABCD</a></td>
+                {% else %}
+                <td><i class="fa-solid fa-check green-color" ></i></td>
+                {% endif %}
+                {% if item[2] == 0 %}
+                <td><a href="{{ url_for('admin.checkStudentF',  report_id = item[0])}}">Section F is not completed(Optional)</a></td>
+                {% else %}
+                <td><i class="fa-solid fa-check green-color" ></i></td>
+                {% endif %}
+                {% if item[3] == 0 %}
+                <td><a href="{{ url_for('admin.checkMainsuper',  report_id = item[0])}}">Main supervisor need to approve section ABCD</a></td>
+                {% else %}
+                <td><i class="fa-solid fa-check green-color" ></i></td>
+                {% endif %}
+                {% if item[4] == staff_counts[loop.index0] %}
+                <td><i class="fa-solid fa-check green-color" ></i></td>
+                {% else %}
+                {% set supervisor_count = staff_counts[loop.index0] - item[4] %}
+                <td><a href="{{ url_for('admin.checkSupervisor', report_id = item[0])}}">{% if supervisor_count > 1 %}There are {{ supervisor_count }} supervisors{% else %}There is 1 supervisor{% endif %} need to complete section E</a></td>
+                {% endif %}
+                {% if item[5] == 0 %}
+                <td><a href="{{ url_for('admin.checkConvenor',  report_id = item[0], student_id = item[7])}}">Convenor need to complete section E</a></td>
+                {% else %}
+                <td><i class="fa-solid fa-check green-color" ></i></td>
+                {% endif %}
+                {% if item[6] == 0 %}
+                <td>Pending</td>
+                {% else %}
+                <td><i class="fa-solid fa-check green-color" ></i></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        {% else %}
+        <tr>
+          <td colspan="7">No result found</td>
+        </tr>
+        {% endif %}  
+    </tbody>
+  </table>
+</div>
+<div class="container text-center">
+  <a href="{{ url_for('admin.overdueList') }}" class="btn btn-secondary">Back to Overdue List</a>
+</div>
+{% endblock %}

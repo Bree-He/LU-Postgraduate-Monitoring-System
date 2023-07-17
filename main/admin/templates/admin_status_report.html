@@ -1,0 +1,215 @@
+{% extends "admin.html" %}
+
+{% block greeting %}{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h2 class="row">SIX MONTH REPORTING</h2>
+    <table class="table">
+        <tr class="row">
+            {% set total_students = dem|length + dtss|length + sola|length %}
+            <th class="col-3 d-flex">Faculty Student Numbers: {{ total_students }}</th>
+            <th class="col d-flex"><div style="width: 20px; height: 20px; background-color: green; margin-right:5%;"></div>All Good</th>
+            <th class="col-3 d-flex"><div style="width: 20px; height: 20px; background-color: orange; margin-right:5%;"></div>Some unsatisfactory comments</th>
+            <th class="col d-flex"><div style="width: 20px; height: 20px; background-color: red; margin-right:5%;"></div>Unsatisfactory</th>
+            <th class="col"> Year: 2023 Term: JUNE</th>
+        </tr>
+    </table>
+    <p><b>One orange:</b> the Convenor should have a chat to the supervisor.</p>
+    <p><b>Two oranges:</b> the student should get an email saying their progress has been ‘modest’ and should then meet with the Convenor.</p>
+    <p><b>One red:</b> an immediate meeting with the Convenor.</p>
+    
+    <table class="table table-bordered text-center">
+        <tr class="table-light">
+            <th>Name</th>
+            <th>Student ID</th>
+            <th>Superv</th>
+            <th>Asst. Spvr</th>
+            {% for _ in range(2, dem_supvr_max_length) %}
+                <th>Other Spvr</th>
+            {% endfor %}
+            <th colspan="2">2022</th>
+            <th colspan="2">2023</th>
+            <th>Notes</th>
+        </tr>
+        <tr class="table-primary">
+            <th colspan="{{ 2 + dem_supvr_max_length }}">Department of Environmental Management</th>
+            <th>JUN</th>
+            <th>DEC</th>
+            <th>JUN</th>
+            <th>DEC</th>
+            <th></th>
+        </tr>
+        {% for dem in dem %}
+            <tr>
+                <td>{{ dem[0] }}</td>
+                <td>{{ dem[1] }}</td>
+                {% for i in range(dem_supvr_max_length) %} <!--if the supervisor number != match the "dem_supvr_max_length", the rest of the columns will display "N/A"-->
+                    {% if i < dem[2].split(',')|length %}
+                        <td>{{ dem[2].split(',')[i] }}</td>
+                    {% else %}
+                        <td>N/A</td>
+                    {% endif %}
+                {% endfor %}
+
+                {% if dem[3] is not none %}
+                {% set statuses = {
+                    '2022 JUN': 'N/A',
+                    '2022 DEC': 'N/A',
+                    '2023 JUNE': 'N/A',
+                    '2023 DEC': 'N/A'
+                } %}
+                    {% for status in dem[3].split(',') %}
+                        {% set year_month, stat = status.strip().split(' Status: ') %}
+                        {% if year_month in statuses.keys() %}
+                            {% set _ = statuses.update({year_month: stat}) %}
+                        {% endif %}
+                    {% endfor %}
+                    <td class="table-light"><div style="width: 20px; height: 20px; background-color: {% if statuses.get('2022 JUN') == 'G' %}green{% elif statuses.get('2022 JUN') == 'O' %}orange{% elif statuses.get('2022 JUN') == 'R' %}red{% endif %}; margin: auto;"></div></td>
+                    <td class="table-light"><div style="width: 20px; height: 20px; background-color: {% if statuses.get('2022 DEC') == 'G' %}green{% elif statuses.get('2022 DEC') == 'O' %}orange{% elif statuses.get('2022 DEC') == 'R' %}red{% endif %}; margin: auto;"></div></td>
+                    <td class="table-light"><div style="width: 20px; height: 20px; background-color: {% if statuses.get('2023 JUNE') == 'G' %}green{% elif statuses.get('2023 JUNE') == 'O' %}orange{% elif statuses.get('2023 JUNE') == 'R' %}red{% endif %}; margin: auto;"></div></td>
+                    <td class="table-light"><div style="width: 20px; height: 20px; background-color: {% if statuses.get('2023 DEC') == 'G' %}green{% elif statuses.get('2023 DEC') == 'O' %}orange{% elif statuses.get('2023 DEC') == 'R' %}red{% endif %}; margin: auto;"></div></td>
+                {% else %}
+                    <td class="table-light"></td>
+                    <td class="table-light"></td>
+                    <td class="table-light"></td>
+                    <td class="table-light"></td>
+                {% endif %}
+                <td>{% if dem[4] is not none %}{{ dem[4] }}{% endif %}</td>                
+            </tr>
+        {% endfor %}
+        <tr>
+            <th colspan="{{ 7 + dem_supvr_max_length }}">Department Student Numbers: {{ dem|length }}</th>
+        </tr> 
+    </table>
+    <table class="table table-bordered text-center">
+        <tr class="table-light">
+            <th>Name</th>
+            <th>Student ID</th>
+            <th>Superv</th>
+            <th>Asst. Spvr</th>
+            {% for _ in range(2, dtss_supvr_max_length) %}
+                <th>Other Spvr</th>
+            {% endfor %}
+            <th colspan="2">2022</th>
+            <th colspan="2">2023</th>
+            <th>Notes</th>
+        </tr>
+
+        <tr class="table-primary">
+            <th colspan="{{ 2 + dtss_supvr_max_length }}">Department of Tourism, Sport and Society</th>
+            <th>JUN</th>
+            <th>DEC</th>
+            <th>JUN</th>
+            <th>DEC</th>
+            <th></th>
+        </tr>
+        {% for dtss in dtss %}
+            <tr>
+                <td>{{ dtss[0] }}</td>
+                <td>{{ dtss[1] }}</td>
+                {% for i in range(dtss_supvr_max_length) %} <!--if the supervisor number != match the "dem_supvr_max_length", the rest of the columns will display "N/A"-->
+                    {% if i < dtss[2].split(',')|length %}
+                        <td>{{ dtss[2].split(',')[i] }}</td>
+                    {% else %}
+                        <td>N/A</td>
+                    {% endif %}
+                {% endfor %}
+
+                {% if dtss[3] is not none %}
+                {% set statuses = {
+                    '2022 JUN': 'N/A',
+                    '2022 DEC': 'N/A',
+                    '2023 JUNE': 'N/A',
+                    '2023 DEC': 'N/A'
+                } %}
+                    {% for status in dtss[3].split(',') %}
+                        {% set year_month, stat = status.strip().split(' Status: ') %}
+                        {% if year_month in statuses.keys() %}
+                            {% set _ = statuses.update({year_month: stat}) %}
+                        {% endif %}
+                    {% endfor %}
+                    <td class="table-light"><div style="width: 20px; height: 20px; background-color: {% if statuses.get('2022 JUN') == 'G' %}green{% elif statuses.get('2022 JUN') == 'O' %}orange{% elif statuses.get('2022 JUN') == 'R' %}red{% endif %}; margin: auto;"></div></td>
+                    <td class="table-light"><div style="width: 20px; height: 20px; background-color: {% if statuses.get('2022 DEC') == 'G' %}green{% elif statuses.get('2022 DEC') == 'O' %}orange{% elif statuses.get('2022 DEC') == 'R' %}red{% endif %}; margin: auto;"></div></td>
+                    <td class="table-light"><div style="width: 20px; height: 20px; background-color: {% if statuses.get('2023 JUNE') == 'G' %}green{% elif statuses.get('2023 JUNE') == 'O' %}orange{% elif statuses.get('2023 JUNE') == 'R' %}red{% endif %}; margin: auto;"></div></td>
+                    <td class="table-light"><div style="width: 20px; height: 20px; background-color: {% if statuses.get('2023 DEC') == 'G' %}green{% elif statuses.get('2023 DEC') == 'O' %}orange{% elif statuses.get('2023 DEC') == 'R' %}red{% endif %}; margin: auto;"></div></td>
+                {% else %}
+                    <td class="table-light"></td>
+                    <td class="table-light"></td>
+                    <td class="table-light"></td>
+                    <td class="table-light"></td>
+                {% endif %}
+                <td>{% if dtss[4] is not none %}{{ dtss[4] }}{% endif %}</td>                
+            </tr>    
+        {% endfor %}
+        <tr>
+            <th colspan="{{ 7 + dtss_supvr_max_length }}">Department Student Numbers: {{ dtss|length }}</th>
+        </tr>
+    </table>
+    <table class="table table-bordered text-center">
+        <tr class="table-light">
+            <th>Name</th>
+            <th>Student ID</th>
+            <th>Superv</th>
+            <th>Asst. Spvr</th>
+            {% for _ in range(2, sola_supvr_max_length) %}
+                <th>Other Spvr</th>
+            {% endfor %}
+            <th colspan="2">2022</th>
+            <th colspan="2">2023</th>
+            <th>Notes</th>
+        </tr>
+
+        <tr class="table-primary">
+            <th colspan="{{ 2 + sola_supvr_max_length }}">School of Landscape Architecture</th>
+            <th>JUN</th>
+            <th>DEC</th>
+            <th>JUN</th>
+            <th>DEC</th>
+            <th></th>
+        </tr>
+        {% for sola in sola %}
+            <tr>
+                <td>{{ sola[0] }}</td>
+                <td>{{ sola[1] }}</td>
+                {% for i in range(sola_supvr_max_length) %} <!--if the supervisor number != match the "dem_supvr_max_length", the rest of the columns will display "N/A"-->
+                    {% if i < sola[2].split(',')|length %}
+                        <td>{{ sola[2].split(',')[i] }}</td>
+                    {% else %}
+                        <td>N/A</td>
+                    {% endif %}
+                {% endfor %}
+
+                {% if sola[3] is not none %}
+                {% set statuses = {
+                    '2022 JUN': 'N/A',
+                    '2022 DEC': 'N/A',
+                    '2023 JUNE': 'N/A',
+                    '2023 DEC': 'N/A'
+                } %}
+                    {% for status in sola[3].split(',') %}
+                        {% set year_month, stat = status.strip().split(' Status: ') %}
+                        {% if year_month in statuses.keys() %}
+                            {% set _ = statuses.update({year_month: stat}) %}
+                        {% endif %}
+                    {% endfor %}
+                    <td class="table-light"><div style="width: 20px; height: 20px; background-color: {% if statuses.get('2022 JUN') == 'G' %}green{% elif statuses.get('2022 JUN') == 'O' %}orange{% elif statuses.get('2022 JUN') == 'R' %}red{% endif %}; margin: auto;"></div></td>
+                    <td class="table-light"><div style="width: 20px; height: 20px; background-color: {% if statuses.get('2022 DEC') == 'G' %}green{% elif statuses.get('2022 DEC') == 'O' %}orange{% elif statuses.get('2022 DEC') == 'R' %}red{% endif %}; margin: auto;"></div></td>
+                    <td class="table-light"><div style="width: 20px; height: 20px; background-color: {% if statuses.get('2023 JUNE') == 'G' %}green{% elif statuses.get('2023 JUNE') == 'O' %}orange{% elif statuses.get('2023 JUNE') == 'R' %}red{% endif %}; margin: auto;"></div></td>
+                    <td class="table-light"><div style="width: 20px; height: 20px; background-color: {% if statuses.get('2023 DEC') == 'G' %}green{% elif statuses.get('2023 DEC') == 'O' %}orange{% elif statuses.get('2023 DEC') == 'R' %}red{% endif %}; margin: auto;"></div></td>
+                {% else %}
+                    <td class="table-light"></td>
+                    <td class="table-light"></td>
+                    <td class="table-light"></td>
+                    <td class="table-light"></td>
+                {% endif %}
+                <td>{% if sola[4] is not none %}{{ sola[4] }}{% endif %}</td>                
+            </tr>    
+        {% endfor %}
+        <tr>
+            <th colspan="{{ 7 + sola_supvr_max_length }}">Department Student Numbers: {{ sola|length }}</th>
+        </tr>
+    </table>
+</div>
+{% endblock %}

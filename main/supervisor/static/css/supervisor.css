@@ -1,0 +1,85 @@
+.topbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    background: linear-gradient(to right, rgba(19, 19, 240, 0.9), rgba(70, 70, 236, 0.5));
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo img {
+    height: 90px;
+    margin-right: 10px;
+  }
+  h1{
+    color: aliceblue;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+  }
+  h2{
+    color: #0066CC;
+    text-align: center;
+    }
+  
+
+  .footer {
+    
+    color: aliceblue;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(to right, rgba(19, 19, 240, 0.9), rgba(70, 70, 236, 0.5));
+    text-align: center;
+  }
+  
+  .link{
+    color: aliceblue;
+  }
+
+  html,
+  body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .content-wrapper {
+    flex: 1;
+  }
+
+  .main-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  .table1 {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .table1 th, #my-table td {
+    text-align: left;
+    padding: 8px;
+  }
+  
+  .table1 th {
+    background-color: #0066CC;
+    color: white;
+  }
+  
+ .table1 tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  thead {
+    background-color: #0f65bc;
+    color: white;
+  }

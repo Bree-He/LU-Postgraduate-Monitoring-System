@@ -1,0 +1,132 @@
+{% extends "student.html" %}
+{% block greeting %}
+
+{% endblock %}
+
+{% block content %}
+
+<br>
+
+
+
+<div class="container">
+    <div class="center">
+    <form id="myForm" method="POST" onsubmit="return validateForm()">
+        <h2>Section F*: Student Assessment of Supervision, Technical and Administrative Support </h2>
+        <hr>
+        <label><b>*This section is to be sent to the Faculty Postgraduate Chair.  It can be used for positive and/or negative comments.
+               <br>
+               <br> If you feel it is inappropriate that this form should go to your Faculty Postgraduate Chairperson for whatever reason, then you may send it directly to the Postgraduate Director, Dr. Andrew Holyoake.
+               <br>
+               <br> It is very important that you identify and write down any concerns you have about your supervisor(s), technical or administrative staff even when you feel this may be inappropriate (e.g., for cultural reasons).  You should not feel powerless to identify your concerns.
+               <br>
+               <br> Information on this form is confidential to the Faculty Postgraduate Chair (or the Postgraduate Director) and will not automatically be shown to your supervisors, technical or administrative staff.  However, we are not allowed by law to withhold these forms from people mentioned in them should they request them. For this reason, you may prefer to discuss the problem(s) instead of/before committing them to paper.  The best way to prevent small problems becoming big ones is to discuss the ‘Mutual Expectations Agreement’ document with your supervisor(s) as well as any incipient supervisor problems.  If these routes fail, then the other options available to you are mentioned above.
+               <br>
+               <br> The Faculty Postgraduate Chair (or the Postgraduate Director) will contact you to discuss any issues if you tick the box at the bottom of this form.  Through this discussion the most appropriate course of subsequent action will be discussed with you.  Unlike the form itself, the details of these oral discussions will remain confidential.
+        </b></label>
+
+        <br>
+        <br>
+
+    <div class="row">
+            <div class="col-md-12">
+                <label for="student_name"><b><h5>{{ student_name[0][0] }}</h5> </b></label>
+                <!-- <input type="name" class="form-control" id="student_name" name="student_name" value="" disabled> -->
+            </div>
+
+            
+
+            <div class="col-md-12 mb-3">
+                <label for=""><b>Please choose the supervisor(s) you want to leave comment(s):</b></label>
+            </div>
+            <div class="col-md-12 mb-3">
+                {% for supervisor in supervisors %}
+                <div class="form-check form-check-inline col-md-3 text-right">
+                    {% set selected_supervisors = sectionf[0][2].split(',') if sectionf is defined and sectionf[0][2] is defined else [] %}
+                    {% set is_selected = supervisor[0] in selected_supervisors %}
+                    <input class="form-check-input" type="checkbox" name="spvrs_name[]" id="spvrs_name{{ loop.index }}" value="{{ supervisor[0] }}" {% if is_selected %}checked{% endif %} onchange="toggleDateInput(this, document.getElementById('spvrs_name{{ loop.index }}'))">
+                    <label class="form-check-label" for="spvrs_name{{ loop.index }}">{{ supervisor[0] }}</label>
+                </div>
+                {% endfor %}
+            </div>
+            
+    </div>
+    <div class="row">
+                <div class="form-floating mb-3">
+                    <textarea name="comments" class="form-control" placeholder="Leave a comment here" id="comments" name="comments" required>{% if sectionf is defined %}{{ sectionf[0][3] }}{% endif %}</textarea>
+                    <label for="comments">Leave comments to above supervisor(s)</label>
+                </div>
+    </div>
+    
+
+
+    <div class="row">
+        <div class="col-md-12 mb-3">
+                <hr>
+                <label for="" ><b>Yes, I want to talk to the (Please choose the relevant one):</b></label>
+                <div class="col-md-12">
+                    <div class="form-check form-check-inline col-md-5 text-right">
+                        <input class="form-check-input" type="radio" name="talk_to" id="talk_to" value="PG Chair" {%  if sectionf is defined and sectionf[0][4] == 'PG Chair' %} checked {% endif %} required>
+                        <label class="form-check-label" for="talkto1">Faculty Postgraduate Chair</label>
+                    </div>  
+                    <div class="form-check form-check-inline col-md-5 text-right mb-3">
+                        <input class="form-check-input" type="radio" name="talk_to" id="talk_to" value="Convenor" {%  if sectionf is defined and sectionf[0][4] == 'Convenor' %} checked {% endif %} required>
+                        <label class="form-check-label" for="talkto2">Academic Administration Convenor</label>
+                    </div>
+                </div>
+                <br>
+                
+                <div class="d-flex justify-content-around">
+                    <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                    <!-- save all the info and return to home page with a success msg -->
+                    <button type="submit" class="btn btn-outline-primary" name="action" value="save_sec_f">Save as draft</button>
+                    <button type="submit" class="btn btn-outline-success" name="action" value="sec_f_submit">Submit</button>
+                </div>
+        </div>
+    </div>
+    </form>
+        
+  
+
+    </div>
+
+        
+
+
+
+<script>
+    // JavaScript code to change the form action based on button click
+    document.getElementById("myForm").addEventListener("submit", function(event) {
+        event.preventDefault();  // Prevent the form from submitting
+        
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        var checked = false;
+        
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+            checked = true;
+            break;
+            }
+        }
+        
+        if (!checked) {
+            alert("Please tick at least one box to proceed!");
+            return false;
+        }
+
+        var action = event.submitter.value;  // Get the value of the clicked button
+
+        // Set the form action based on the button value
+        if (action === "save_sec_f") {
+            this.action = "/student/save_sec_f";
+        } else if (action === "sec_f_submit") {
+            this.action = "/student/sec_f_submit";
+        }
+
+        this.submit();  // Submit the form with the updated action
+    });
+</script>
+
+
+
+{% endblock %}

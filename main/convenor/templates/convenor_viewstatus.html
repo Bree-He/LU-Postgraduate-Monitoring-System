@@ -1,0 +1,128 @@
+{% extends "convenor.html" %}
+
+{% block greeting %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form method="post">
+        <div class="row">
+            <div class="col">
+                <h2>6MR Status</h2>
+            </div>
+            <div class="col">
+                <input id="student_id" name="student_id" value="{{student_id}}" type="text" class="form-control" placeholder="Student ID" aria-label="Student ID">
+            </div>
+            <div class="col">
+                <input id="studentName" name="studentName" value="{{studentName}}" type="text" class="form-control" placeholder="Student Name" aria-label="Student Name">
+            </div>
+            <div class="col">
+                <select class="form-select" name="status">
+                    <option disabled selected>Status</option>
+                    <option value="complete" {% if status == 1 %}selected{% endif %}>Complete</option>
+                    <option value="incomplete" {% if status == 0 %}selected{% endif %}>Incomplete</option>
+                </select>
+            </div>
+            <div class="col">
+                <select class="form-select" name="reportYear">
+                    <option disabled selected>Year</option>
+                    <option value="2022" {% if reportYear == '2022' %}selected{% endif %}>2022</option>
+                    <option value="2023" {% if reportYear == '2023' %}selected{% endif %}>2023</option>
+                </select>
+            </div>
+            <div class="col">
+                <select class="form-select" name="reportTerm">
+                    <option disabled selected>Term</option>
+                    <option value="JUNE" {% if reportTerm == 'JUNE' %}selected{% endif %}>JUN</option>
+                    <option value="DEC" {% if reportTerm == 'DEC' %}selected{% endif %}>DEC</option>
+                </select>
+            </div>
+            
+            <div class="col">
+                <button type="submit" class="btn btn-primary" formaction="/convenor/status">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="container">
+    <table class="table table-hover text-center">
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Report ID</th>
+                <th>Report Year</th>
+                <th>Report Term</th>            
+                <th>Report Status</th>
+                <th>Current Status</th>
+                <th>Previous Status </th>
+               <!-- <th>Department</th>  --> 
+            </tr>
+        </thead>
+        <tbody>
+            {% if studentList %}
+                {% for student in studentList%}
+                    <tr>
+                        <th scope="row">{{ student[0] }}</th>
+                        <td><a href="{{ url_for('convenor.view6MrDetail', report_id=student[2], student_id=student[0]) }}">{{ student[1] }}</a></td>
+                        <td>{{ student[2] }}</td>
+                        <td>{{ student[3] }}</td>
+                        <td>{{ student[4] }}</td>
+                        
+                        {% if student[5] == 1 %}
+                            <td>Complete</td>
+                        {% else %}
+                            <td>Incomplete</td>
+                        {% endif %}
+
+                        {% if student[5] != 1%}
+                            {% if student[6] == 'G' %}
+                                <td><div style="width: 20px; height: 20px; background-color: green; margin: auto;"></div></td>
+                            {% elif student[6] == 'O' %}
+                                <td><div style="width: 20px; height: 20px; background-color: orange; margin: auto;"></div></td>
+                            {%  elif student[6] == 'R' %}
+                                <td><div style="width: 20px; height: 20px; background-color: red; margin: auto;"></div></td>
+                            {% else%}
+                                <td>N/A</td>
+                            {% endif %}
+                        {% else%}
+                        <td>N/A</td>
+                        {% endif %}
+                        
+                        {% if student[7] == 'G' %}
+                            <td><div style="width: 20px; height: 20px; background-color: green; margin: auto;"></div></td>
+                        {% elif student[7] == 'O' %}
+                            <td><div style="width: 20px; height: 20px; background-color: orange; margin: auto;"></div></td>
+                        {%  elif student[7] == 'R' %}
+                            <td><div style="width: 20px; height: 20px; background-color: red; margin: auto;"></div></td>
+                        {% else%}
+                            <td>N/A</td>
+                        {% endif %}
+
+                       <!-- {% if student[8] == "DEM" %}
+                            <td>Environmental Management</td>
+                        {% elif student[8] == "SOLA" %}
+                            <td>School of Landscape Architecture</td>
+                        {% else %}
+                            <td>Tourism, Sport and Society</td>
+                        {% endif %} -->
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="7">No result found</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>        
+{% endblock %}
+
+
+<!-- <div class="col">
+    <select class="form-select" name="department">
+        <option disabled selected>Department</option>
+        <option value="DEM" {% if department == 'DEM' %}selected{% endif %}>Environmental Management</option>
+        <option value="DTSS" {% if department == 'DTSS' %}selected{% endif %}>Tourism, Sport and Society</option>
+        <option value="SOLA" {% if department == 'SOLA' %}selected{% endif %}>Landscape Architecture</option>
+    </select>
+</div>  --> 

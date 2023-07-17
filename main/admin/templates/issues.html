@@ -1,0 +1,125 @@
+{% extends "admin.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+{% for message in get_flashed_messages(with_categories=True) %}
+  <div class="alert alert-{{ message[0] }} alert-dismissible fade show text-center" role="alert">
+      {{ message[1] }}
+  </div>
+{% endfor %}
+<div class="col">
+    <h2>6MR Feedback</h2>
+  </div>
+  <div class="container">
+    <form  action="/admin/issues" method="post">
+        <div class="row">
+            <div class="col">
+                <input id="student_id" name="student_id" value="{{student_id}}" type="text" class="form-control" placeholder="Student ID" aria-label="Student ID">
+            </div>
+            <div class="col">
+                <input id="studentName" name="studentName" value="{{studentName}}" type="text" class="form-control" placeholder="Student Name" aria-label="Student Name">
+            </div>
+            <div class="col">
+              <select class="form-select" name="reportYear">
+                  <option disabled selected>Year</option>
+                  <option value="2022" {% if reportYear == '2022' %}selected{% endif %}>2022</option>
+                  <option value="2023" {% if reportYear == '2023' %}selected{% endif %}>2023</option>
+              </select>
+            </div>
+          <div class="col">
+              <select class="form-select" name="reportTerm">
+                  <option disabled selected>Term</option>
+                  <option value="JUNE" {% if reportTerm == 'JUNE' %}selected{% endif %}>JUN</option>
+                  <option value="DEC" {% if reportTerm == 'DEC' %}selected{% endif %}>DEC</option>
+              </select>
+          </div>
+            <div class="col">
+                <select class="form-select" name="department">
+                    <option disabled selected>Department</option>
+                    <option value="DEM" {% if department == 'DEM' %}selected{% endif %}>Environmental Management</option>
+                    <option value="DTSS" {% if department == 'DTSS' %}selected{% endif %}>Tourism, Sport and Society</option>
+                    <option value="SOLA" {% if department == 'SOLA' %}selected{% endif %}>Landscape Architecture</option>
+                </select>
+            </div>
+            <div class="col">
+                <select class="form-select" name="s_status">
+                    <option disabled selected>Status</option>
+                    <option value="G" {% if s_status == 'Green' %}selected{% endif %}>Green</option>
+                    <option value="O" {% if s_status == 'Orange' %}selected{% endif %}>Orange</option>
+                    <option value="R" {% if s_status == 'Red' %}selected{% endif %}>Red</option>
+                </select>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+  </div>
+<br>
+  <table class="table table-bordered text-center table-hover">
+    <thead>
+      <tr>
+        <th>Student ID</th>
+        <th>Name</th>
+        <th>Report ID</th>
+        <th>Report Year</th>
+        <th>Report Term</th>
+        <th>Current Status</th>
+        <th>Previous Status </th>
+        <th>Department</th>
+        <th>Notes</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if result %}
+        {% for item in result %}
+          <tr>
+            <th scope="row">{{ item[0] }}</th>
+            <td><a href="{{ url_for('admin.view6MR', report_id=item[2]) }}">{{ item[1] }}</a></td>
+            <td>{{ item[2] }}</td>
+            <td>{{item[3]}}</td>
+            <td>{{item[4]}}</td>
+            
+            {% if item[6] == 'G' %}
+            <td><div style="width: 20px; height: 20px; background-color: green; margin: auto;"></div></td>
+            {% elif item[6]== 'O' %}
+            <td><div style="width: 20px; height: 20px; background-color: orange; margin: auto;"></div></td>
+            {% elif item[6]== 'R' %}
+            <td><div style="width: 20px; height: 20px; background-color: red; margin: auto;"></div></td>
+            {% else %}
+            <td></td>
+            {% endif %}
+
+            {% if item[7] == 'G' %}
+            <td><div style="width: 20px; height: 20px; background-color: green; margin: auto;"></div></td>
+            {% elif item[7]== 'O' %}
+            <td><div style="width: 20px; height: 20px; background-color: orange; margin: auto;"></div></td>
+            {% elif item[7]== 'R' %}
+            <td><div style="width: 20px; height: 20px; background-color: red; margin: auto;"></div></td>
+            {% else %}
+            <td></td>
+            {% endif %}
+
+            <td>{{item[8]}}</td>
+            <td>
+              <!-- add a new column for the edit button -->
+              <button class="btn btn-info btn-sm"><a class="b" href="{{ url_for('admin.notes', report_id=item[2]) }}">Take notes</a></button>
+            </td>
+            <td>
+              {% if item[6]== 'O' or item[6]== 'R' or (item[6]== 'O' and item[7]== 'O')%}
+              <button class="btn btn-warning btn-sm"><a class="b" href="{{ url_for('admin.sendAlertEmail', report_id=item[2], current=item[6], previous=item[7], dept=item[8]) }}">Send Alert</a></button>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="7">No result found</td>
+        </tr>
+      {% endif %}
+  
+    </tbody>
+  </table>
+  
+{% endblock %}

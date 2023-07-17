@@ -1,0 +1,96 @@
+{% extends "admin.html" %}
+
+{% block greeting %}
+
+{% endblock %}
+
+{% block content %}
+
+{% for message in get_flashed_messages(with_categories=True) %}
+<div class="alert alert-{{ message[0] }} alert-dismissible fade show text-center" role="alert">
+    {{ message[1] }}
+</div>
+{% endfor %}
+
+<div class="container">
+    <div class="center">
+        <h2>Add Student</h2>
+
+        <form method="POST" action="{{ url_for('admin.addStudentSupervisors') }}">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                        type="button" role="tab" aria-controls="profile" aria-selected="false" disabled>Profile</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="supervisors-tab" data-bs-toggle="tab"
+                        data-bs-target="#supervisors" type="button" role="tab" aria-controls="supervisors"
+                        aria-selected="true">Supervisors</button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="supervisors" role="tabpanel"
+                    aria-labelledby="supervisors-tab">
+                    <input type="hidden" name="student_id" value="{{ student_id }}">
+                    <div id="supervisorFields">
+                        <div class="mb-3">
+                            <label for="supervisor_name" class="form-label">Supervisor Name</label>
+                            <select class="form-select" id="supervisor_name" name="supervisor_name" required>
+                                {% for supervisor in supervisor_names %}
+                                    {% if supervisor[0] not in existing_supervisor_types %}
+                                        <option value="{{ supervisor[0] }}">{{ supervisor[0] }}</option>
+                                    {% else %}
+                                        <option value="{{ supervisor[0] }}" disabled>{{ supervisor[0] }} (Already Assigned)</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>   
+                        </div>
+                        <div class="mb-3">
+                            <label for="supv_type" class="form-label">Supervisor Type</label>
+                            <select class="form-select" id="supv_type" name="supv_type" required>
+                                {% if 'Main Supervisor' not in existing_supervisor_types %}
+                                    <option value="Main Supervisor">Main Supervisor</option>
+                                {% elif 'Main Supervisor' in existing_supervisor_types and supv_type == 'Main Supervisor' %}
+                                    <option value="Main Supervisor" selected disabled>Main Supervisor (Already Assigned)</option>
+                                {% endif %}
+                                {% if 'Associate Supervisor' not in existing_supervisor_types %}
+                                    <option value="Associate Supervisor">Associate Supervisor</option>
+                                {% elif 'Associate Supervisor' in existing_supervisor_types and supv_type == 'Associate Supervisor' %}
+                                    <option value="Associate Supervisor" selected disabled>Associate Supervisor (Already Assigned)</option>
+                                {% endif %}
+                                <option value="Other Supervisor">Other Supervisor</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+                    <button type="submit" class="btn btn-success" onclick="return confirmSubmit()">Save Supervisor</button>
+                    <a href="{{ url_for('admin.viewStudentList') }}" class="btn btn-secondary" onclick="return confirmBack()">Back</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function confirmSubmit() {
+        if (confirm("Are you sure you want to submit the form?")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+
+<script>
+    function confirmBack() {
+        if (confirm("Are you sure you want to back to the student list?")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+
+
+{% endblock %}

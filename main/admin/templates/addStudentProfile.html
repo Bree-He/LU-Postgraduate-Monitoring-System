@@ -1,0 +1,77 @@
+{% extends "admin.html" %}
+
+{% block greeting %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="center">
+  <h2>Add Student</h2>
+
+  <form method="POST" action="{{ url_for('admin.addStudentProfile') }}">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Profile</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="supervisors-tab" data-bs-toggle="tab" data-bs-target="#supervisors" type="button" role="tab" aria-controls="supervisors" aria-selected="false" disabled>Supervisors</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+    <div class="mb-3">
+      <label for="fname" class="form-label">First Name</label>
+      <input type="text" class="form-control" id="fname" name="fname" required>
+    </div>
+    <div class="mb-3">
+      <label for="lname" class="form-label">Last Name</label>
+      <input type="text" class="form-control" id="lname" name="lname" required>
+    </div>
+    <div class="mb-3">
+      <label for="enrollment_date" class="form-label">Enrollment Date</label>
+      <input type="date" class="form-control" id="enrollment_date" name="enrollment_date" required>
+    </div>
+    <div class="mb-3">
+      <label for="current_address" class="form-label">Address</label>
+      <textarea class="form-control" id="current_address" name="current_address" rows="3" required></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="phone" class="form-label">Phone</label>
+      <input type="text" class="form-control" id="phone" name="phone" required>
+    </div>
+    <div class="mb-3">
+      <label for="email_lu" class="form-label">Email LU</label>
+      <input type="email" class="form-control" id="email_lu" name="email_lu" required>
+    </div>
+    <div class="mb-3">
+      <label for="email_other" class="form-label">Email Other</label>
+      <input type="email" class="form-control" id="email_other" name="email_other" required>
+    </div>
+    <div class="mb-3">
+      <label for="part_full_time" class="form-label">Part/Full Time</label>
+      <select class="form-select" id="part_full_time" name="part_full_time" required>
+        <option value="Part time">Part Time</option>
+        <option value="Full time">Full Time</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="dept_code" class="form-label">Department Code</label>
+      <select class="form-select" id="dept_code" name="dept_code" required>
+        <option value="DEM">DEM</option>
+        <option value="SOLA">SOLA</option>
+        <option value="DTSS">DTSS</option>
+      </select>
+    </div>    
+    <div class="mb-3">
+      <label for="thesis_title" class="form-label">Thesis Title</label>
+      <textarea class="form-control" id="thesis_title" name="thesis_title" rows="1" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Profile</button>
+      
+  </form>
+
+
+{% endblock %}

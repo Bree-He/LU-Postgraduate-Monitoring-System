@@ -1,0 +1,90 @@
+{% extends "student.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+{% if success_message %}
+<!-- Show a success message if it exists -->
+<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+  {{ success_message }}
+</div>
+{% endif %}
+<div class="container">
+  <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link " aria-current="page" href="{{ url_for('student.profile') }}">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="{{ url_for('student.scholar') }}">Scholarship</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('student.employ') }}">Employment</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"  href="{{ url_for('student.super') }}">Supervisor</a>
+      </li>
+    </ul>
+</div>
+  <br>
+  <div class="container mt-3 mx-auto">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                {% for student in profile %}
+                <h5 class="card-title text-center">{{ student[2] }} {{ student[1] }}</h5>           
+                {% endfor %}     
+                <hr>
+            
+                <form action="/student/savescholar" method="POST">
+                  <input name="solaid" class="form-control " id="solaid" value="{% if scholarship is defined %}{{ scholarship[0] }}{% endif %}" type="hidden" >
+                    <div class="form-group row ">
+                      <label for="scholar1" class="col-sm-4 col-form-label">Scholarship </label>
+                      <div class="col-sm-8">
+                        
+                          <input type="scholar1" class="form-control" id="scholar1" name="scholar1" value="{% if scholarship is defined %}{{ scholarship[2] }}{% endif %} "  pattern= "[a-zA-Z\s]+" required>
+                      </div>                       
+                  </div>  
+                  <div class="form-group row ">
+                      <label for="value1" class="col-sm-4 col-form-label">Scholarship value</label>
+                      <div class="col-sm-8">
+                          <input type="number" class="form-control" id="value1" name="value1" value="{% if scholarship is defined %}{{ scholarship[3] }}{% endif %}"  pattern= "[a-zA-Z\s]+" required>
+                      </div>                       
+                  </div>  
+                  <div class="form-group row ">
+                      <label for="tenure1" class="col-sm-4 col-form-label">Scholarship tenure</label>
+                      <div class="col-sm-8">
+                          <input type="tenure1" class="form-control" id="tenure1" name="tenure1" value="{% if scholarship is defined %}{{ scholarship[4] }}{% endif %}"  pattern= "[a-zA-Z\s]+" required>
+                      </div>                       
+                  </div>   
+                  <div class="form-group row ">
+                      <label for="s1" class="col-sm-4 col-form-label">Scholarship start date</label>
+                      <div class="col-sm-8">
+                          <input type="date" class="form-control" id="s1" name="s1" value="{% if scholarship is defined %}{{ scholarship[5] }}{% endif %}"  pattern= "[a-zA-Z\s]+" required>
+                      </div>                       
+                  </div>  
+                  <div class="form-group row ">
+                      <label for="e1" class="col-sm-4 col-form-label">Scholarship end date</label>
+                      <div class="col-sm-8">
+                          <input type="date" class="form-control" id="e1" name="e1" value="{% if scholarship is defined %}{{ scholarship[6] }}{% endif %}"  pattern= "[a-zA-Z\s]+" required>
+                      </div>                       
+                  </div> 
+                  
+                  
+                  <div class="form-group row">
+                    <div class="col-sm-6">
+                        <button type="reset" class="btn btn-secondary float-left">Reset</button>
+                    </div>
+                    <div class="col-sm-6">
+                        <button type="submit" class="btn btn-primary float-right" onclick="return confirm('Are you sure you want to save your changes?')">Save</button>
+                    </div>
+                </div>
+                  </form>
+                  
+            </div>
+        </div>
+    </div>
+  </div>
+  <br>
+
+
+
+{% endblock %}

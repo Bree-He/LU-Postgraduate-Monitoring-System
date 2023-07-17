@@ -1,0 +1,134 @@
+{% extends "supervisor.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+<br>
+<h2>Section E: Assement of Student by Supervisor(s) </h2>
+<hr>
+
+<div class="container mt-3 mx-auto">
+    <p><strong>Student:</strong> {{ student_name }}  &nbsp;&nbsp;&nbsp;
+        <strong>Student ID:</strong> {{ student_id }}
+    </p>
+    <p><strong>Supervisor:</strong> {{ staff_name }} <strong>Staff ID:</strong> {{ staff_id }}</p>
+
+    <div class="center">  
+        <form id="myForm" method="POST" onsubmit="return validateForm()">
+            <label><b>Please rate the student's performance in the areas named below.</b></label>
+            <hr>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="overall_6m" >How do you rate the student's overall progress in the last 6 months	</label>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <select name="overall_6m" id="overall_6m" class="form-select" aria-label="Default select example" required>
+                        <option value="" disabled selected>select</option>
+                        <option value="Excellent"{% if previous_data and previous_data[0][6] == "Excellent" %}selected{% endif %}>Excellent</option>
+                        <option value="Good"{% if previous_data and previous_data[0][6] == "Good" %}selected{% endif %}>Good</option>
+                        <option value="Satisfactory"{% if previous_data and previous_data[0][6] == "Satisfactory" %}selected{% endif %}>Satisfactory</option>
+                        <option value="Below Average" {% if previous_data and previous_data[0][6] == "Below Average" %}selected{% endif %}>Below Average</option>
+                        <option value="Unsatisfactory" {% if previous_data and previous_data[0][6] == "Unsatisfactory" %}selected{% endif %}>Unsatisfactory</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="overall_full" >How do you rate the student's overall progress in terms of the 3-year PhD track	</label>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <select name="overall_full" id="overall_full" class="form-select" aria-label="Default select example" required>
+                        <option value="" disabled selected>select</option>
+                        <option value="Excellent" {% if previous_data and previous_data[0][7] == "Excellent" %}selected{% endif %} >Excellent</option>
+                        <option value="Good" {% if previous_data and previous_data[0][7] == "Good" %}selected{% endif %} >Good</option>
+                        <option value="Satisfactory" {% if previous_data and previous_data[0][7] == "Satisfactory" %}selected{% endif %}  >Satisfactory</option>
+                        <option value="Below Average" {% if previous_data and previous_data[0][7] == "Below Average" %}selected{% endif %}  >Below Average</option>
+                        <option value="Unsatisfactory" {% if previous_data and previous_data[0][7] == "Unsatisfactory" %}selected{% endif %} >Unsatisfactory</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="work_quality" >How would you rate the student's academic work, e.g., research writing	</label>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <select name="work_quality" id="work_quality" class="form-select" aria-label="Default select example" required>
+                        <option value="" disabled selected>select</option>
+                        <option value="Excellent"{% if previous_data and previous_data[0][8] == "Excellent" %}selected{% endif %}>Excellent</option>
+                        <option value="Good"{% if previous_data and previous_data[0][8] == "Good" %}selected{% endif %} >Good</option>
+                        <option value="Satisfactory"{% if previous_data and previous_data[0][8] == "Satisfactory" %}selected{% endif %}>Satisfactory</option>
+                        <option value="Below Average"{% if previous_data and previous_data[0][8] == "Below Average" %}selected{% endif %}>Below Average</option>
+                        <option value="Unsatisfactory" {% if previous_data and previous_data[0][8] == "Unsatisfactory" %}selected{% endif %}>Unsatisfactory</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="technical_skill" >Student's technical skill/s to complete the project	</label>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <select name="technical_skill" id="technical_skill" class="form-select" aria-label="Default select example" required>
+                        <option value="" disabled selected>select</option>
+                        <option value="Excellent"{% if previous_data and previous_data[0][9] == "Excellent" %}selected{% endif %}>Excellent</option>
+                        <option value="Good" {% if previous_data and previous_data[0][9] == "Good" %}selected{% endif %}>Good</option>
+                        <option value="Satisfactory"{% if previous_data and previous_data[0][9] == "Satisfactory" %}selected{% endif %} >Satisfactory</option>
+                        <option value="Below Average" {% if previous_data and previous_data[0][9] == "Below Average" %}selected{% endif %}>Below Average</option>
+                        <option value="Unsatisfactory" {% if previous_data and previous_data[0][9] == "Unsatisfactory" %}selected{% endif %} >Unsatisfactory</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="likelihood_6m" >How would you rate the student's likelihood of achieving the next 6-months objectives	</label>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <select name="likelihood_6m" id="likelihood_6m" class="form-select" aria-label="Default select example" required>
+                        <option value="" disabled selected>select</option>
+                        <option value="Excellent" {% if previous_data and previous_data[0][10] == "Excellent" %}selected{% endif %}>Excellent</option>
+                        <option value="Good"{% if previous_data and previous_data[0][10] == "Good" %}selected{% endif %} >Good</option>
+                        <option value="Satisfactory"{% if previous_data and previous_data[0][10] == "Satisfactory" %}selected{% endif %} >Satisfactory</option>
+                        <option value="Below Average"{% if previous_data and previous_data[0][10] == "Below Average" %}selected{% endif %} >Below Average</option>
+                        <option value="Unsatisfactory" {% if previous_data and previous_data[0][10] == "Unsatisfactory" %}selected{% endif %}>Unsatisfactory</option>
+                    </select>
+                </div>
+                <hr>
+                
+                <div class="col-md-12 mb-3">
+                    <label for="recommendation">If a progress review meeting has taken place in the period covered by this report, have any recommendations from that meeting been carried out?(*only required for main supervisor)</label>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <div class="form-check form-check-inline col-md-3 text-right">
+                        <input class="form-check-input" type="radio" name="recommendation" id="recommendation" value="Yes" {% if previous_data and previous_data[0][11] == "Yes" %}checked{% endif %} {% if supv_type != "Main Supervisor" %} disabled {% else %} required {%endif%}>
+                        <label class="form-check-label" for="recommendation1">Yes</label>
+                    </div>
+                    <div class="form-check form-check-inline col-md-3 text-right">
+                        <input class="form-check-input" type="radio" name="recommendation" id="recommendation" value="No" {% if previous_data and previous_data[0][11] == "No" %}checked{% endif %} {% if supv_type != "Main Supervisor" %} disabled {% else %} required {%endif%}>
+                        <label class="form-check-label" for="recommendation2">No</label>
+                    </div>
+                    <div class="form-check form-check-inline col-md-3 text-right">
+                        <input class="form-check-input" type="radio" name="recommendation" id="recommendation" value="N/A" {% if previous_data and previous_data[0][11] == "N/A" %}checked{% endif %} {% if supv_type != "Main Supervisor" %} disabled {% else %} required {%endif%}>
+                        <label class="form-check-label" for="recommendation3">N/A</label>
+                    </div>
+                </div>
+                <!-- for textarea no space !!!!!!!! -->
+                <div class="col-md-6 mb-3">
+                    <label for="Comments">Comments:</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea name="Comments" class="form-control textarea-lg" placeholder="Leave a comment here" id="Comments" required>{% if previous_data is defined %}{{previous_data[0][12]}}{% endif %}</textarea>
+                    <label for="Comments">Leave a comment here. You can adjust it by dragging the bottom-right corner of the dialog box.</label>
+                </div>
+                <div class="col">
+                    <label for="report_date"><b>Date:</b></label>
+                    <input class="form-control" type="date" name="date" required value="{% if previous_data is defined %}{{previous_data[0][13]}}{% endif %}" />
+                </div>
+                
+            </div>
+            <hr>
+            <div class="row justify-content-end mt-4">
+                <div class="col-6 text-right">
+                    <button type="reset" class="btn btn-secondary ">Reset</button>
+                </div>
+
+                <div class="col-4 text-right">
+                    <button type="submit" class="btn btn-primary" 
+                         onclick="return confirm('Are you sure you want to submit your evaluation? It will send emaill to convenor after the submition')"
+                    >Submit</button>
+                </div>
+            </div>       
+        </form>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,78 @@
+{% extends "student.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+{% if success_message %}
+<!-- Show a success message if it exists -->
+<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+  {{ success_message }}
+</div>
+{% endif %}
+<div class="container">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link " aria-current="page" href="{{ url_for('student.profile') }}">Profile</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url_for('student.scholar') }}">Scholarship</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="{{ url_for('student.employ') }}">Employment</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link"  href="{{ url_for('student.super') }}">Supervisor</a>
+    </li>
+  </ul>
+</div>
+  <br>
+
+  <div class="container mt-3 mx-auto">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                {% for student in profile %}
+                <h5 class="card-title text-center">{{ student[2] }} {{ student[1] }}</h5>           
+                {% endfor %}     
+                <hr>
+
+
+                <form action="/student/semploy" method="POST">
+                  <input name="em_id" class="form-control " id="em_id" value="{% if employ is defined %}{{ employ[0] }}{% endif %}" type="hidden" >
+                    <div class="form-group row ">
+                        <label for="employment" class="col-sm-4 col-form-label">Company</label>
+                        <div class="col-sm-8">
+                            <input type="employment" class="form-control" id="employment" name="employment" value="{% if employ is defined %}{{ employ[2] }}{% endif %}"  pattern= "[a-zA-Z\s]+" required>
+                        </div>
+                    </div>  
+                    <div class="form-group row ">
+                        <label for="sdate" class="col-sm-4 col-form-label">Start date</label>
+                        <div class="col-sm-8">
+                            <input type="date" class="form-control" id="sdate" name="sdate" value="{% if employ is defined %}{{ employ[3] }}{% endif %}" required>
+                        </div>
+                    </div>    
+                    <div class="form-group row ">
+                        <label for="edate" class="col-sm-4 col-form-label">End date</label>
+                        <div class="col-sm-8">
+                            <input type="date" class="form-control" id="edate" name="edate" value="{% if employ is defined %}{{ employ[4] }}{% endif %}">
+                        </div>
+                    </div>   
+
+
+                    <div class="form-group row">
+                      <div class="col-sm-6">
+                          <button type="reset" class="btn btn-secondary float-left">Reset</button>
+                      </div>
+                      <div class="col-sm-6">
+                          <button type="submit" class="btn btn-primary float-right" onclick="return confirm('Are you sure you want to save your changes?')">Save</button>
+                      </div>
+                  </div>
+
+
+              </form>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends "student.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+
+{% if success_message %}
+<!-- Show a success message if it exists -->
+<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+  {{ success_message }}
+</div>
+{% endif %}
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Profile</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('student.scholar') }}">Scholarship</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('student.employ') }}">Employment</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('student.super') }}">Supervisor</a>
+        </li>
+    </ul>
+</div>
+<!-- profile -->
+      <div class="container mt-3 mx-auto">
+        {% for student in profile %}
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{ student[2] }} {{ student[1] }}</h5>                
+                            <hr>
+                            
+              
+                            <form action="/student/profile" method="POST">
+                                <div class="form-group row">
+                                    <label for="studentid" class="col-sm-4 col-form-label">Student ID</label>
+                                    <div class="col-sm-8">
+                                        <input type="studentid" class="form-control" id="studentid" name="studentid" value="{{ student[0] }}" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label for="date" class="col-sm-4 col-form-label">Enrollment Date</label>
+                                    <div class="col-sm-8">
+                                        <input type="Date" class="form-control" id="date" name="date" value="{{ student[3] }}" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label for="address" class="col-sm-4 col-form-label">Address</label>
+                                    <div class="col-sm-8">
+                                        <input type="address" class="form-control" id="address" name="address" value="{{ student[4] }}"pattern="^[a-zA-Z0-9\s,'-]*$" required placeholder="Enter valid address">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label for="phone" class="col-sm-4 col-form-label">Phone</label>
+                                    <div class="col-sm-8">
+                                        <input type="phone" class="form-control" id="phone" name="phone" value="{{ student[5] }}" pattern="[0-9]{9,11}" required placeholder="Enter phone number (9-11 digits)" >
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label for="email_lu" class="col-sm-4 col-form-label">Lincoln Email</label>
+                                    <div class="col-sm-8">
+                                        <input type="email_lu" class="form-control" id="email_lu" name="email_lu" value="{{ student[6] }}"disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label for="otheremail" class="col-sm-4 col-form-label">Other Email</label>
+                                    <div class="col-sm-8">
+                                        <input type="email" class="form-control" id="otheremail" name="otheremail" value="{{ student[7] }}"  required placeholder="Enter valid email">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label for="type" class="col-sm-4 col-form-label">Type</label>
+                                    <div class="col-sm-8">
+                                        <input type="type" class="form-control" id="type" name="type" value="{{ student[8]}}" disabled>
+                                    </div>
+                                </div>         
+                                <div class="form-group row ">
+                                    <label for="dept" class="col-sm-4 col-form-label">Department Code</label>
+                                    <div class="col-sm-8">
+                                        <input type="dept" class="form-control" id="dept" name="dept" value="{{ student[9]}}" disabled>
+                                    </div>
+                                </div>   
+                                <div class="form-group row ">
+                                    <label for="title" class="col-sm-4 col-form-label">Thesis Title</label>
+                                    <div class="col-sm-8">
+                                        <input type="title" class="form-control" id="title" name="title" value="{{student[10]}}" disabled>
+                                    </div>
+                                </div>     
+       
+                                {% endfor %}   
+                                <div class="form-group row">
+                                  <div class="col-sm-6">
+                                      <button type="reset" class="btn btn-secondary float-left">Reset</button>
+                                  </div>
+                                  <div class="col-sm-6">
+                                      <button type="submit" class="btn btn-primary float-right" onclick="return confirm('Are you sure you want to save your changes?')">Save</button>
+                                  </div>
+                              </div>
+                          </form>  
+                    
+                           
+                        
+                    </div>
+                </div>
+            </div>
+    </div>
+    <br>
+</body>  
+{% endblock %}

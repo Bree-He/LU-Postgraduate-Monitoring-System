@@ -1,0 +1,59 @@
+{% extends "admin.html" %}
+
+{% block greeting %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="center">
+    <h2>Add Supervisor</h2>
+  
+    <form method="POST" action="{{ url_for('admin.addSupervisor') }}">
+      <div class="mb-3">
+        <label for="fname" class="form-label">First Name</label>
+        <input type="text" class="form-control" id="fname" name="fname" required>
+      </div>
+      <div class="mb-3">
+        <label for="lname" class="form-label">Last Name</label>
+        <input type="text" class="form-control" id="lname" name="lname" required>
+      </div>
+      <div class="mb-3">
+        <label for="role" class="form-label">Role</label>
+        <select class="form-select" id="role" name="role" required>
+          <option value="Supervisor">Supervisor</option>
+          <option value="Convenor">Convenor</option>
+        </select>
+      </div> 
+      <div class="mb-3">
+        <label for="employment_start_date" class="form-label">Employment_start_date</label>
+        <input type="date" id="employment_start_date" name="employment_start_date" required>
+      </div>
+      <div class="mb-3">
+        <label for="room" class="form-label">Room</label>
+        <input type="text" class="form-control" id="room" name="room" required>
+      </div>
+      <div class="mb-3">
+        <label for="email_lu" class="form-label">Email LU</label>
+        <input type="email" class="form-control" id="email_lu" name="email_lu" required>
+      </div>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone</label>
+        <input type="text" class="form-control" id="phone" name="phone" required>
+      </div>
+      <div class="mb-3">
+        <label for="dept_code" class="form-label">Department Code</label>
+        <select class="form-select" id="dept_code" name="dept_code" required>
+          <option value="DEM">DEM</option>
+          <option value="SOLA">SOLA</option>
+          <option value="DTSS">DTSS</option>
+        </select>
+      </div>    
+      <button type="submit" class="btn btn-primary">Save Profile</button>
+        
+    </form>
+  
+                
+
+{% endblock %}

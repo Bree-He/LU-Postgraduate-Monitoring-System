@@ -1,0 +1,86 @@
+{% extends "supervisor.html" %}
+
+{% block greeting %}
+
+{% endblock %}
+
+{% block content %}
+
+{% if success_message %}
+<!-- Show a success message if it exists -->
+<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+  {{ success_message }}
+</div>
+{% endif %}
+{% for message in get_flashed_messages(with_categories=True) %}
+<div class="alert alert-{{ message[0] }} alert-dismissible fade show text-center" role="alert">
+    {{ message[1] }}
+</div>
+{% endfor %}
+
+<div class="container  mt-3 mx-auto">
+  <form method="post">
+    <div class="row">
+      <div class="col">
+        <h2>Report Status List</h2>
+      </div>
+      <div class="col">
+        <input id="studentName" name="studentName" type="text" class="form-control" placeholder="Student Name" aria-label="Student Name">
+      </div>
+      <div class="col">
+        <input id="report_id" name="report_id" type="number" class="form-control" placeholder="Report ID" aria-label="Report ID">
+      </div>
+      <div class="col">
+        <button type="submit" class="btn btn-primary" formaction="/supervisor/fill6mr">Search</button>
+      </div>
+    </div>
+  </form>
+  <div class="table-responsive">
+    <table class="table table-hover text-center">
+      <thead>       
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Report ID</th>
+          <th scope="col">View Report</th>
+          <th scope="col">Approval Status by Main Supervisor</th>
+          <th scope="col">Assessment/Section E Status</th>
+        </tr>
+      </thead>
+      <tbody>  
+        {% if fill6mrlist %}
+          {% for student in fill6mrlist if student[2] is not none %}
+            <tr>
+              <td>{{ student[1] }}</td>
+              <td>{{ student[2] }}</td>
+              <td><a href="{{ url_for('supervisor.su_view_6mr', report_id = student[2]) }}">View</a></td>
+              <td>
+                  {% if student[3] == 1 %}
+                  Approved
+                  {% else %}
+                  In Progress
+                  {% endif %}
+              </td>
+              <td>
+                  {% if student[3] == 1 %}
+                      {% if student[4] == staff_counts[loop.index0] %}
+                          Assessed
+                      {% else %}
+                          <a href="{{ url_for('supervisor.su_section_e', report_id=student[2], student_id=student[0], student_name=student[1], staff_id=student[5], staff_name=student[6], supv_type=student[7]) }}">To Assess</a>
+                      {% endif %}
+                  {% else %}
+                      <span class="disabled-link">To Assess</span>
+                  {% endif %}
+              </td>   
+            </tr>
+          {% endfor %}
+          {% else %}
+          <tr>
+            <td colspan="6" class="text-center">No result found</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

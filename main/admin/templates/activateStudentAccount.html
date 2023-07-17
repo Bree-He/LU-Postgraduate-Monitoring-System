@@ -1,0 +1,85 @@
+{% extends "admin.html" %}
+
+{% block greeting %}
+
+{% endblock %}
+
+{% block content %}
+  
+<h2 style="color: #0066CC; font-weight: bolder; font-size:4ch;">Activate Student Account</h2>
+
+<table class="table" style="padding: 20px;">
+  <thead>
+    <tr style="background-color: #0f65bc; color: white;">
+      <th scope="col">Student ID</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Enrollment Date</th>
+      <th scope="col">Department Code</th>
+      <th scope="col">Email</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for student in inactiveStudents %}
+        <tr>
+          <th scope="row">{{ student[0] }}</th>
+          <td>{{ student[1] }}</td>
+          <td>{{ student[2] }}</td>
+          <td>{{ student[3] }}</td>
+          <td>{{ student[4] }}</td>
+          <td>{{ student[5] }}</td>
+          <form method="post">
+            <td style="padding: 5px; text-align: center;" >
+              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#confirmModal{{student[0]}}" style="margin: 5px;">
+                Activate
+              </button>
+  
+              <div class="modal fade" id="confirmModal{{student[0]}}" tabindex="-1" aria-labelledby="confirmeModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="confirmeModalLabel" style="color: black;">Activate</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Confirm Activate Student {{ student[1] + " " + student[2] }}
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-success" formaction="/admin/activatestudentaccount?action=activate&id={{student[0]}}">Confirm Activate</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#declineModal{{student[0]}}" style="margin: 5px;">
+                Decline
+                </button>
+    
+                <div class="modal fade" id="declineModal{{student[0]}}" tabindex="-1" aria-labelledby="declineModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="declineModalLabel" style="color: black;">Decline</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Confirm Decline Student {{ student[1] + " " + student[2] }}
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger" formaction="/admin/activatestudentaccount?action=decline&id={{student[0]}}">Confirm Decline</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </td>
+          </form>
+        </tr>
+      {% endfor %}
+
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "student.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link " aria-current="page" href="{{ url_for('student.profile') }}">Profile</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('student.scholar') }}">Scholarship</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('student.employ') }}">Employment</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="#">Supervisor</a>
+    </li>
+    </ul>
+</div>
+<div class="container mt-3 mx-auto">
+  {% for student in profile %}
+      <div class="row">
+          <div class="col-md-8 mx-auto">
+              <div class="card">
+                  <div class="card-body">
+                      <h5 class="card-title text-center">{{ student[2] }} {{ student[1] }}</h5> 
+                      {% endfor %}               
+                      <hr>
+                      <div class="form-group row ">
+                        <label for="super" class="col-sm-4 col-form-label">Main Supervisor</label>
+                        <div class="col-sm-8">
+                            <input type="super" class="form-control" id="super" name="super" value="{{super1[0]}}" disabled>
+                        </div>
+                    </div>    
+                    <div class="form-group row ">
+                        <label for="asst" class="col-sm-4 col-form-label">Associate Supervisor</label>
+                        <div class="col-sm-8">
+                            <input type="asst" class="form-control" id="asst" name="asst" value="{% if super2 %}{{ super2[0] }}{% else %}{% endif %}" disabled>
+                        </div>
+                    </div>  
+                    <!-- <div class="form-group row ">
+                        <label for="co" class="col-sm-4 col-form-label">Co-Supervisor</label>
+                        <div class="col-sm-8">
+                            <input type="co" class="form-control" id="co" name="co" value="{% if super3 %}{{ super3[0] }}{% else %}{% endif %}" disabled>
+                        </div>
+                    </div> -->
+                    {% for value in super3 %}
+                    <div class="form-group row ">
+                        <label for="other" class="col-sm-4 col-form-label">Other Supervisor</label>
+                        <div class="col-sm-8">
+                            <input type="other" class="form-control" id="other" name="other" value="{{ value[0] }}" disabled>
+                        </div>
+                    </div>  
+                    {% endfor %}
+                    <!-- <div class="form-group row ">
+                        <label for="advisor" class="col-sm-4 col-form-label">Advisor</label>
+                        <div class="col-sm-8">
+                            <input type="advisor" class="form-control" id="advisor" name="advisor" value="{% if super5 %}{{ super5[0]}}{% else %}{% endif %}" disabled>
+                        </div>
+                    </div>  -->
+
+                  </div>
+              </div>
+          </div>
+      </div>
+</div>
+<br>
+{% endblock %}
+
+
+
+
+

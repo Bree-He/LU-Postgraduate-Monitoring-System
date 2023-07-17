@@ -1,0 +1,208 @@
+{% extends "admin.html" %}
+
+{% block greeting %}
+
+{% endblock %}
+
+{% block content %}
+
+<head>
+    <hr>
+    <div class="row text-center">
+      <h2 class="col">Faculty Performance Report</h2>
+      <h3 class="col">Six Monthly Report Analysis – June 2023</h3>
+    </div>
+</head>
+<body>
+    <table class="table table-bordered text-center">
+        <thead>
+            <tr>
+                <th class="text-center">Area</th>
+                <th class="text-center">Very Good</th>
+                <th class="text-center">Good</th>
+                <th class="text-center">Satisfactory</th>
+                <th class="text-center">Unsatisfactory</th>
+                <th class="text-center">Not Relevant</th>
+                <th class="text-center">Total</th>
+            </tr>
+        </thead>
+        <tbody>        
+            <tr>
+              <td>Access to supervisors – principal</td>
+              <td class="text-center">{{alldata[4][2]}}</td>
+              <td class="text-center">{{alldata[3][2]}}</td>
+              <td class="text-center">{{alldata[2][2]}}</td>
+              <td class="text-center">{{alldata[1][2]}}</td>
+              <td class="text-center">{{alldata[0][2]}}</td>
+              <td class="text-center">{{alldata[4][2] + alldata[3][2] + alldata[2][2] + alldata[1][2] + alldata[0][2]}}</td>
+            </tr>
+            <tr>
+              <td>Access to other supervisors</td>
+              <td class="text-center">{{alldata[9][2]}}</td>
+              <td class="text-center">{{alldata[8][2]}}</td>
+              <td class="text-center">{{alldata[7][2]}}</td>
+              <td class="text-center">{{alldata[6][2]}}</td>
+              <td class="text-center">{{alldata[5][2]}}</td>
+              <td class="text-center">{{alldata[9][2] + alldata[8][2] + alldata[7][2] + alldata[6][2] + alldata[5][2]}}</td>
+            </tr>
+            <tr>
+              <td>Supervisor expertise – principal</td>
+              <td class="text-center">{{alldata[14][2]}}</td>
+              <td class="text-center">{{alldata[13][2]}}</td>
+              <td class="text-center">{{alldata[12][2]}}</td>
+              <td class="text-center">{{alldata[11][2]}}</td>
+              <td class="text-center">{{alldata[10][2]}}</td>
+              <td class="text-center">{{alldata[14][2] + alldata[13][2] + alldata[12][2] + alldata[11][2] + alldata[10][2]}}</td>
+            </tr>
+            <tr>
+              <td>Supervisor expertise – others</td>
+              <td class="text-center">{{alldata[19][2]}}</td>
+              <td class="text-center">{{alldata[18][2]}}</td>
+              <td class="text-center">{{alldata[17][2]}}</td>
+              <td class="text-center">{{alldata[16][2]}}</td>
+              <td class="text-center">{{alldata[15][2]}}</td>
+              <td class="text-center">{{alldata[19][2] + alldata[18][2] + alldata[17][2] + alldata[16][2] + alldata[15][2]}}</td>
+            </tr>
+            <tr>
+              <td>Quality of feedback – principal</td>
+              <td class="text-center">{{alldata[24][2]}}</td>
+              <td class="text-center">{{alldata[23][2]}}</td>
+              <td class="text-center">{{alldata[22][2]}}</td>
+              <td class="text-center">{{alldata[21][2]}}</td>
+              <td class="text-center">{{alldata[20][2]}}</td>
+              <td class="text-center">{{alldata[24][2] + alldata[23][2] + alldata[22][2] + alldata[21][2] + alldata[20][2]}}</td>
+            </tr>
+            <tr>
+              <td>Quality of feedback – others</td>
+              <td class="text-center">{{alldata[29][2]}}</td>
+              <td class="text-center">{{alldata[28][2]}}</td>
+              <td class="text-center">{{alldata[27][2]}}</td>
+              <td class="text-center">{{alldata[26][2]}}</td>
+              <td class="text-center">{{alldata[25][2]}}</td>
+              <td class="text-center">{{alldata[29][2] + alldata[28][2] + alldata[27][2] + alldata[26][2] + alldata[25][2]}}</td>
+            </tr>
+            <tr>
+              <td>Timeliness feedback – principal</td>
+              <td class="text-center">{{alldata[34][2]}}</td>
+              <td class="text-center">{{alldata[33][2]}}</td>
+              <td class="text-center">{{alldata[32][2]}}</td>
+              <td class="text-center">{{alldata[31][2]}}</td>
+              <td class="text-center">{{alldata[30][2]}}</td>
+              <td class="text-center">{{alldata[34][2] + alldata[33][2] + alldata[32][2] + alldata[31][2] + alldata[30][2]}}</td>
+            </tr>
+            <tr>
+              <td>Timeliness of feedback – others</td>
+              <td class="text-center">{{alldata[39][2]}}</td>
+              <td class="text-center">{{alldata[38][2]}}</td>
+              <td class="text-center">{{alldata[37][2]}}</td>
+              <td class="text-center">{{alldata[36][2]}}</td>
+              <td class="text-center">{{alldata[35][2]}}</td>
+              <td class="text-center">{{alldata[39][2] + alldata[38][2] + alldata[37][2] + alldata[36][2] + alldata[35][2]}}</td>
+            </tr>
+            <tr>
+              <td>Courses available</td>
+              <td class="text-center">{{alldata[44][2]}}</td>
+              <td class="text-center">{{alldata[43][2]}}</td>
+              <td class="text-center">{{alldata[42][2]}}</td>
+              <td class="text-center">{{alldata[41][2]}}</td>
+              <td class="text-center">{{alldata[40][2]}}</td>
+              <td class="text-center">{{alldata[44][2] + alldata[43][2] + alldata[42][2] + alldata[41][2] + alldata[40][2]}}</td>
+            </tr>
+            <tr>
+              <td>Workspace</td>
+              <td class="text-center">{{alldata[49][2]}}</td>
+              <td class="text-center">{{alldata[48][2]}}</td>
+              <td class="text-center">{{alldata[47][2]}}</td>
+              <td class="text-center">{{alldata[46][2]}}</td>
+              <td class="text-center">{{alldata[45][2]}}</td>
+              <td class="text-center">{{alldata[49][2] + alldata[48][2] + alldata[47][2] + alldata[46][2] + alldata[45][2]}}</td>
+            </tr>
+            <tr>
+              <td>Computer facilities</td>
+              <td class="text-center">{{alldata[54][2]}}</td>
+              <td class="text-center">{{alldata[53][2]}}</td>
+              <td class="text-center">{{alldata[52][2]}}</td>
+              <td class="text-center">{{alldata[51][2]}}</td>
+              <td class="text-center">{{alldata[50][2]}}</td>
+              <td class="text-center">{{alldata[54][2] + alldata[53][2] + alldata[52][2] + alldata[51][2] + alldata[50][2]}}</td>
+            </tr>
+            <tr>
+              <td>ITS support</td>
+              <td class="text-center">{{alldata[59][2]}}</td>
+              <td class="text-center">{{alldata[58][2]}}</td>
+              <td class="text-center">{{alldata[57][2]}}</td>
+              <td class="text-center">{{alldata[56][2]}}</td>
+              <td class="text-center">{{alldata[55][2]}}</td>
+              <td class="text-center">{{alldata[59][2] + alldata[58][2] + alldata[57][2] + alldata[56][2] + alldata[55][2]}}</td>
+            </tr>
+            <tr>
+              <td>Research software</td>
+              <td class="text-center">{{alldata[64][2]}}</td>
+              <td class="text-center">{{alldata[63][2]}}</td>
+              <td class="text-center">{{alldata[62][2]}}</td>
+              <td class="text-center">{{alldata[61][2]}}</td>
+              <td class="text-center">{{alldata[60][2]}}</td>
+              <td class="text-center">{{alldata[64][2] + alldata[63][2] + alldata[62][2] + alldata[61][2] + alldata[60][2]}}</td>
+            </tr>
+            <tr>
+              <td>Library facilities</td>
+              <td class="text-center">{{alldata[69][2]}}</td>
+              <td class="text-center">{{alldata[68][2]}}</td>
+              <td class="text-center">{{alldata[67][2]}}</td>
+              <td class="text-center">{{alldata[66][2]}}</td>
+              <td class="text-center">{{alldata[65][2]}}</td>
+              <td class="text-center">{{alldata[69][2] + alldata[68][2] + alldata[67][2] + alldata[66][2] + alldata[65][2]}}</td>
+            </tr>
+            <tr>
+              <td>TLS support</td>
+              <td class="text-center">{{alldata[74][2]}}</td>
+              <td class="text-center">{{alldata[73][2]}}</td>
+              <td class="text-center">{{alldata[72][2]}}</td>
+              <td class="text-center">{{alldata[71][2]}}</td>
+              <td class="text-center">{{alldata[70][2]}}</td>
+              <td class="text-center">{{alldata[74][2] + alldata[73][2] + alldata[72][2] + alldata[71][2] + alldata[70][2]}}</td>
+            </tr>
+            <tr>
+              <td>Statistical support</td>
+              <td class="text-center">{{alldata[79][2]}}</td>
+              <td class="text-center">{{alldata[78][2]}}</td>
+              <td class="text-center">{{alldata[77][2]}}</td>
+              <td class="text-center">{{alldata[76][2]}}</td>
+              <td class="text-center">{{alldata[75][2]}}</td>
+              <td class="text-center">{{alldata[79][2] + alldata[78][2] + alldata[77][2] + alldata[76][2] + alldata[75][2]}}</td>
+            </tr>
+            <tr>
+              <td>Research ethics support</td>
+              <td class="text-center">{{alldata[84][2]}}</td>
+              <td class="text-center">{{alldata[83][2]}}</td>
+              <td class="text-center">{{alldata[82][2]}}</td>
+              <td class="text-center">{{alldata[81][2]}}</td>
+              <td class="text-center">{{alldata[80][2]}}</td>
+              <td class="text-center">{{alldata[84][2] + alldata[83][2] + alldata[82][2] + alldata[81][2] + alldata[80][2]}}</td>
+            </tr>
+            <tr>
+              <td>Research funding support</td>
+              <td class="text-center">{{alldata[89][2]}}</td>
+              <td class="text-center">{{alldata[88][2]}}</td>
+              <td class="text-center">{{alldata[87][2]}}</td>
+              <td class="text-center">{{alldata[86][2]}}</td>
+              <td class="text-center">{{alldata[85][2]}}</td>
+              <td class="text-center">{{alldata[89][2] + alldata[88][2] + alldata[87][2] + alldata[86][2] + alldata[85][2]}}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Total (%)</td>
+                <td class="text-center">{{ (totaldata[4][1]) }} ({{ "{:.1f}".format((totaldata[4][1]/totaldata[5][1])*100) }}%)</td>
+                <td class="text-center">{{ (totaldata[0][1]) }} ({{ "{:.1f}".format((totaldata[0][1]/totaldata[5][1])*100) }}%)</td>
+                <td class="text-center">{{ (totaldata[2][1]) }} ({{ "{:.1f}".format((totaldata[2][1]/totaldata[5][1])*100) }}%)</td>
+                <td class="text-center">{{ (totaldata[3][1]) }} ({{ "{:.1f}".format((totaldata[3][1]/totaldata[5][1])*100) }}%)</td>
+                <td class="text-center">{{ (totaldata[1][1]) }} ({{ "{:.1f}".format((totaldata[1][1]/totaldata[5][1])*100) }}%)</td>
+                <td class="text-center">{{ totaldata[5][1] }}</td>
+            </tr>
+        </tfoot>
+        
+    </table>
+</body>
+
+{% endblock %}

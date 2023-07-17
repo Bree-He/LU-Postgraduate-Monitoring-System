@@ -1,0 +1,54 @@
+{% extends "admin.html" %}
+{% block greeting %}{% endblock %}
+{% block content %}
+
+{% if success_message %}
+<!-- Show a success message if it exists -->
+<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+  {{ success_message }}
+</div>
+{% endif %}
+
+<div class="col">
+  <h4 class="text-primary">    
+    Incomplete Section E status for the following convenor:
+  </h4>
+</div>
+<br>
+<div class="container">
+  <table class="table table-bordered text-center table-hover">
+    <thead>
+      <p> * Please click on the email to send a reminder </p>
+      <tr>
+        <th scope="col">Staff ID</th>
+        <th scope="col">Supervisor Name</th>
+        <th scope="col">Room</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone</th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+        {% if convenorlist %}
+            {% for item in convenorlist %}
+            <tr>
+                <th scope="row">{{ item[0] }}</th>
+                <td>{{ item[1] }}</td>
+                <td>{{ item[2] }}</td>
+                <td><a href="{{ url_for('admin.sendReminderCon',  report_id=report_id, student_id=item[5], email_lu = item[3])}}">{{ item[3] }}</a></td>
+                <td>{{ item[4] }}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+        <tr>
+          <td colspan="2">No result found</td>
+        </tr>
+        {% endif %}  
+    </tbody>
+  </table>
+</div>
+<div class="container text-center">
+  <a href="{{ url_for('admin.overdueCheck', report_id=report_id) }}" class="btn btn-secondary">Back to Overdue Report Status</a>
+</div>
+{% endblock %}

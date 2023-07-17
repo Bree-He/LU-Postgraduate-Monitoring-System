@@ -1,0 +1,299 @@
+{% extends "student.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+<br>
+<h2>Section B: Milestones</h2>
+
+<hr>
+
+<div class="center">
+    
+    <form id="myForm" method="POST">
+        <label><b>*Please only give date of completion where appropriate in the related box and leave it if not completed </b></label>
+        <div class="row">
+            <div class="col-md-5 mb-5">
+                <label for="induction">Induction Programme (Compulsory)</label>
+            </div>
+            <div class="col-md-1 mb-5">
+                <input class="form-check-input" type="checkbox" id="disableInduction" onchange="toggleDateInput(this, document.getElementById('induction'))" {% if sectionb is defined and sectionb[0][0] %}{% endif %}>
+            </div>
+            <div class="col-md-2 mb-5">
+                <label class="form-check-label" for="disableInduction">Not completed</label>
+            </div>
+            <div class="col-md-4 mb-5">
+                <input type="date" class="form-control" id="induction" name="induction" value="{% if sectionb is defined %}{{ sectionb[0][0] }}{% endif %}" >
+            </div>
+        
+            <div class="col-md-5 mb-5">
+                <label for="mutual">Mutual Expectations Agreement (Compulsory)</label>
+            </div>
+            <div class="col-md-1 mb-5">
+                <input class="form-check-input" type="checkbox" id="disableMutual" onchange="toggleDateInput(this, document.getElementById('mutual'))" {% if sectionb is defined and sectionb[0][1] %}{% endif %}>
+            </div>
+            <div class="col-md-2 mb-5">
+                <label class="form-check-label" for="disableMutual">Not completed</label>
+            </div>
+            <div class="col-md-4 mb-5">
+                <input type="date" class="form-control" id="mutual" name="mutual" value="{% if sectionb is defined %}{{ sectionb[0][1] }}{% endif %}" >
+            </div>
+        
+            <div class="col-md-5 mb-5">
+                <label for="maori">Kaupapa Māori Research MEA (Compulsory if relevant)</label>
+            </div>
+            <div class="col-md-1 mb-5">
+                <input class="form-check-input" type="checkbox" id="disableMaori" onchange="toggleDateInput(this, document.getElementById('maori'))" {% if sectionb is defined and sectionb[0][2] %}{% endif %}>
+            </div>
+            <div class="col-md-2 mb-5">
+                <label class="form-check-label" for="disableMaori">Not completed</label>
+            </div>
+            <div class="col-md-4 mb-5">
+                <input type="date" class="form-control" id="maori" name="maori" value="{% if sectionb is defined %}{{ sectionb[0][2] }}{% endif %}" >
+            </div>
+        
+
+            <div class="col-md-5 mb-5">
+                <label for="intellectual">Intellectual Property Agreement (Compulsory if relevant)</label>
+            </div>
+            <div class="col-md-1 mb-5">
+                <input class="form-check-input" type="checkbox" id="disableIntellectual" onchange="toggleDateInput(this, document.getElementById('intellectual'))" {% if sectionb is defined and sectionb[0][3] %}{% endif %}>
+            </div>
+            <div class="col-md-2 mb-5">
+                <label class="form-check-label" for="disableIntellectual">Not completed</label>
+            </div>
+            <div class="col-md-4 mb-5">
+                <input type="date" class="form-control" id="intellectual" name="intellectual" value="{% if sectionb is defined %}{{ sectionb[0][3] }}{% endif %}" >
+            </div>
+    
+            <div class="col-md-5 mb-5">
+                <label for="thesis">Thesis proposal seminar (Compulsory)</label>
+            </div>
+            <div class="col-md-1 mb-5">
+                <input class="form-check-input" type="checkbox" id="disableThesis" onchange="toggleDateInput(this, document.getElementById('thesis'))" {% if sectionb is defined and sectionb[0][4] %}{% endif %}>
+            </div>
+            <div class="col-md-2 mb-5">
+                <label class="form-check-label" for="disableThesis">Not completed</label>
+            </div>
+            <div class="col-md-4 mb-5">
+                <input type="date" class="form-control" id="thesis" name="thesis" value="{% if sectionb is defined %}{{ sectionb[0][4] }}{% endif %}" >
+            </div>
+    
+            <div class="col-md-5 mb-5">
+                <label for="research">Research Proposal Approved by appropriate Faculty/Centre Postgraduate or equivalent Committee (Compulsory)</label>
+            </div>
+            <div class="col-md-1 mb-5">
+                <input class="form-check-input" type="checkbox" id="disableResearch" onchange="toggleDateInput(this, document.getElementById('research'))" {% if sectionb is defined and sectionb[0][5] %}{% endif %}>
+            </div>
+            <div class="col-md-2 mb-5">
+                <label class="form-check-label" for="disableResearch">Not completed</label>
+            </div>
+            <div class="col-md-4 mb-5">
+                <input type="date" class="form-control" id="research" name="research" value="{% if sectionb is defined %}{{ sectionb[0][5] }}{% endif %}" >
+            </div>
+    
+            <div class="col-md-5 mb-5">
+                <label for="conference">Lincoln University PG conference presentation</label>
+            </div>
+            <div class="col-md-1 mb-5">
+                <input class="form-check-input" type="checkbox" id="disableConference" onchange="toggleDateInput(this, document.getElementById('conference'))" {% if sectionb is defined and sectionb[0][6] %}{% endif %}>
+            </div>
+            <div class="col-md-2 mb-5">
+                <label class="form-check-label" for="disableConference">Not completed</label>
+            </div>
+            <div class="col-md-4 mb-5">
+                <input type="date" class="form-control" id="conference" name="conference" value="{% if sectionb is defined %}{{ sectionb[0][6] }}{% endif %}" >
+            </div>
+    
+            <div class="col-md-5 mb-5">
+                <label for="seminar">Thesis Results Seminar (Strongly recommended)</label>
+            </div>
+            <div class="col-md-1 mb-5">
+                <input class="form-check-input" type="checkbox" id="disableSeminar" onchange="toggleDateInput(this, document.getElementById('seminar'))" {% if sectionb is defined and sectionb[0][7] %}{% endif %}>
+            </div>
+            <div class="col-md-2 mb-5">
+                <label class="form-check-label" for="disableSeminar">Not completed</label>
+            </div>
+            <div class="col-md-4 mb-5">
+                <input type="date" class="form-control" id="seminar" name="seminar" value="{% if sectionb is defined %}{{ sectionb[0][7] }}{% endif %}" >
+            </div>
+        </div>
+        <br>
+        
+        
+            <label for=""><b>Discuss with your supervisor(s) whether or not your research has been or will need to be approved by any of the Lincoln University Committees listed below and tick the appropriate radio.</b></label>
+        <div class="row">
+            
+                <label class="col-md-4"></label>
+                <label class="col-md-2 ">Needed</label>
+                <label class="col-md-2 ">Approval Given</label>
+                <label class="col-md-2 ">Not needed</label>
+            
+        </div>
+            <div class="row">
+            
+                <label for="" class="col-md-4">Human Ethics Committee	</label>
+                
+                <div class="form-check form-check-inline col-md-2 text-right">
+                    <input class="form-check-input" type="radio" name="human" id="human" value="Needed"  {%  if sectionb is defined and sectionb[0][8] == 'Needed' %} checked {% endif %} required>
+                    <label class="form-check-label" for="human"></label>
+                  </div>
+                
+                
+                  <div class="form-check form-check-inline col-md-2 text-right">
+                    <input class="form-check-input" type="radio" name="human" id="human" value="Approved"  {% if sectionb is defined and sectionb[0][8] == 'Approved' %} checked {% endif %}  required>
+                    <label class="form-check-label" for="human"></label>
+                  </div>
+                
+                
+                  <div class="form-check form-check-inline col-md-2 text-right">
+                    <input class="form-check-input" type="radio" name="human" id="human" value="Not Needed"  {% if sectionb is defined and sectionb[0][8] == 'Not Needed' %} checked {% endif %} required>
+                    <label class="form-check-label" for="human"> </label>
+                  </div>
+                 
+            </div>
+            <div class="row">
+            
+                <label for="" class="col-md-4">Health and Safety Committee	</label>
+                
+                <div class="form-check form-check-inline col-md-2 text-right">
+                    <input class="form-check-input" type="radio" name="health" id="health" value="Needed" {%  if sectionb is defined and sectionb[0][9] == 'Needed' %} checked {% endif %} required>
+                    <label class="form-check-label" for="health"></label>
+                  </div>
+                
+                
+                  <div class="form-check form-check-inline col-md-2 text-right">
+                    <input class="form-check-input" type="radio" name="health" id="health" value="Approved" {% if sectionb is defined and sectionb[0][9] == 'Approved' %} checked {% endif %} required>
+                    <label class="form-check-label" for="health"></label>
+                  </div>
+                
+                
+                  <div class="form-check form-check-inline col-md-2 text-right">
+                    <input class="form-check-input" type="radio" name="health" id="health" value="Not Needed" {% if sectionb is defined and sectionb[0][9] == 'Not Needed' %} checked {% endif %} required >
+                    <label class="form-check-label" for="health"> </label>
+                  </div>
+                 
+            </div>
+            <div class="row">
+                <label for="" class="col-md-4">Animal Ethics Committee	</label>
+                
+                <div class="form-check form-check-inline col-md-2 text-right">
+                    <input class="form-check-input" type="radio" name="animal" id="animal" value="Needed"  {%  if sectionb is defined and sectionb[0][10] == 'Needed' %} checked {% endif %} required>
+                    <label class="form-check-label" for="inlineRadio1"></label>
+                  </div>
+                
+                
+                  <div class="form-check form-check-inline col-md-2 text-right">
+                    <input class="form-check-input" type="radio" name="animal" id="animal" value="Approved"  {% if sectionb is defined and sectionb[0][10] == 'Approved' %} checked {% endif %} required>
+                    <label class="form-check-label" for="inlineRadio2"></label>
+                  </div>
+                
+                
+                  <div class="form-check form-check-inline col-md-2 text-right">
+                    <input class="form-check-input" type="radio" name="animal" id="animal" value="Not Needed"  {% if sectionb is defined and sectionb[0][10] == 'Not Needed' %} checked {% endif %} required>
+                    <label class="form-check-label" for="inlineRadio3"> </label>
+                  </div>
+                 
+            </div>
+        
+            <div class="row">
+                <label for="" class="col-md-4">Institutional Biological Safety Committee	</label>
+                
+                <div class="form-check form-check-inline col-md-2 text-righ">
+                    <input class="form-check-input" type="radio" name="institutional" id="institutional" value="Needed" {%  if sectionb is defined and sectionb[0][11] == 'Needed' %} checked {% endif %} required>
+                    <label class="form-check-label" for="institutional"></label>
+                  </div>
+                
+                
+                  <div class="form-check form-check-inline col-md-2 text-righ">
+                    <input class="form-check-input" type="radio" name="institutional" id="institutional" value="Approved" {% if sectionb is defined and sectionb[0][11] == 'Approved' %} checked {% endif %} required>
+                    <label class="form-check-label" for="institutional"></label>
+                  </div>
+                
+                
+                  <div class="form-check form-check-inline col-md-2 text-right">
+                    <input class="form-check-input" type="radio" name="institutional" id="institutional" value="Not Needed"  {% if sectionb is defined and sectionb[0][11] == 'Not Needed' %} checked {% endif %} required >
+                    <label class="form-check-label" for="institutional"> </label>
+                  </div>
+                 
+            </div>
+            <div class="row">
+                <label for="" class="col-md-4">Radiation Protection Officer	</label>
+                
+                <div class="form-check form-check-inline col-md-2 text-righ">
+                    <input class="form-check-input" type="radio" name="radiation" id="radiation" value="Needed" {%  if sectionb is defined and sectionb[0][12] == 'Needed' %} checked {% endif %} required>
+                    <label class="form-check-label" for="radiation"></label>
+                  </div>
+                
+                
+                  <div class="form-check form-check-inline col-md-2 text-righ">
+                    <input class="form-check-input" type="radio" name="radiation" id="radiation" value="Approved" {% if sectionb is defined and sectionb[0][12] == 'Approved' %} checked {% endif %} required>
+                    <label class="form-check-label" for="radiation"></label>
+                  </div>
+                
+                
+                  <div class="form-check form-check-inline col-md-2 text-right">
+                    <input class="form-check-input" type="radio" name="radiation" id="radiation" value="Not Needed" {% if sectionb is defined and sectionb[0][12] == 'Not Needed' %} checked {% endif %} required>
+                    <label class="form-check-label" for="radiation"> </label>
+                  </div>
+                 
+            </div>
+            
+       
+        
+        <br>
+        <br>
+        <fieldset id="">
+            <label for="report_box"><b>Given that you are being managed to submit your PhD within 3 years of registering then please select the appropriate reporting box below*:</b></label>
+         <select class="form-select mb-5" id="report_box" name="report_box" aria-label="Default select example"required>
+            <option value="" disabled selected>select</option>
+            <option value="1" {% if sectionb is defined and sectionb[0][13] == '1' %} selected {% endif %}>1st--Proposal submitted and seminar held</option>
+            <option value="2" {% if sectionb is defined and sectionb[0][13] == '2' %} selected {% endif %}>2nd--Proposal approved; Data collection started</option>
+            <option value="3" {% if sectionb is defined and sectionb[0][13] == '3' %} selected {% endif %}>3rd--Mid term PhD progress evaluation</option>
+            <option value="4" {% if sectionb is defined and sectionb[0][13] == '4' %} selected {% endif %}>4th--Data collected; Analysis  and writing begun</option>
+            <option value="5" {% if sectionb is defined and sectionb[0][13] == '5' %} selected {% endif %}>5th--Analysis done; Half thesis written</option>
+            <option value="6" {% if sectionb is defined and sectionb[0][13] == '6' %} selected {% endif %}>6th--Thesis submitted for examination; Research seminar held</option>
+         </select>
+   
+        </fieldset>
+        <br>     
+        <hr> 
+        <div class="d-flex justify-content-around">
+            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+            <!-- save all the info and return to home page with a succuss msg -->
+            <button type="submit" class="btn btn-outline-primary" name="action" value="save_sec_b">Save as draft</button>
+            <button type="submit" class="btn btn-outline-success" name="action" value="sectionc">Next</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // JavaScript code to change the form action based on button click
+    document.getElementById("myForm").addEventListener("submit", function(event) {
+        event.preventDefault();  // Prevent the form from submitting
+
+        var action = event.submitter.value;  // Get the value of the clicked button
+
+        // Set the form action based on the button value
+        if (action === "save_sec_b") {
+            this.action = "/student/save_sec_b";
+        } else if (action === "sectionc") {
+            this.action = "/student/sectionc";
+        }
+
+        this.submit();  // Submit the form with the updated action
+    });
+
+// checkbox
+
+        function toggleDateInput(checkbox, dateInput) {
+            if (checkbox.checked) {
+                dateInput.disabled = true;
+                dateInput.value = "";
+            } else {
+                dateInput.disabled = false;
+            }
+        }
+</script>
+
+
+{% endblock %}

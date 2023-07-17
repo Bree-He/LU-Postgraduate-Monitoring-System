@@ -1,0 +1,32 @@
+{% extends "index.html" %}
+
+{% block content %}
+<body>
+    {% if error %}
+	<div class="alert alert-danger alert-dismissible fade show  text-center py-2" role="alert">
+		{{ error }}
+	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>	
+	{% endif %}
+
+	<div class="login">
+		<h1>Login</h1>
+		<div class="links">
+			<a href="{{ url_for('login') }}" class="active">Login</a>
+			<a href="{{ url_for('register') }}">Register</a>
+		</div>
+		<form action="{{ url_for('loginuser') }}" method="post">
+			<label for="username">
+				<i class="fas fa-user"></i>
+			</label>
+			<input type="text" name="username" placeholder="LU Email" id="username" required>
+			<label for="password">
+				<i class="fas fa-lock"></i>
+			</label>
+			<input type="password" name="password" placeholder="Password" id="password" required>
+			<div>New here? <a href="{{ url_for('register') }}">Register today!</a></div>
+			<input type="submit" value="Login">
+		</form>
+	</div>
+</body>
+{% endblock %}

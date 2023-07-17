@@ -1,0 +1,142 @@
+{% extends "student.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+<br>
+<h2 class="report">PhD Student 6-Month Report Form</h2>
+<h2>Section A: student record</h2>
+
+<hr>
+<div class="center">
+    <form id="myForm" method="POST">
+    <div class="row">
+        {% for pro in profile%}
+        <div class="col-md-12">
+            <label for="name">Name:</label>
+            <input type="name" class="form-control" id="name" name="name" value="{{pro[1]}} {{pro[2]}}" disabled>
+            
+        </div>
+        <div class="col-md-4">
+            <label for="date">Enrollment Date:</label>
+            <input type="date" class="form-control" id="date" name="date" value="{{pro[3]}}" disabled>
+                                
+        </div>
+        <div class="col-md-4">
+            <label for="address">Address:</label>
+            <input type="address" class="form-control" id="address" name="address" value="{{pro[4]}}" disabled>
+        </div>
+        <div class="col-md-4">
+            <label for="phone">Phone:</label>
+            <input type="phone" class="form-control" id="phone" name="phone" value="{{pro[5]}}"pattern="[0-9]{9,11}" required placeholder="Enter phone number (9-11 digits)" disabled>
+            
+        </div>
+        <div class="col-md-4">
+            <label for="email_lu">Lincoln Email:</label>                   
+            <input type="email" class="form-control" id="email" name="email" value="{{pro[6]}}" disabled>
+                    
+        </div>
+        <div class="col-md-4">
+            <label for="email" >Other Email:</label>
+                                
+            <input type="email" class="form-control" id="email" name="email" value="{{pro[7]}}" disabled>
+                                
+        </div>
+        
+        <div class="col-md-4">
+            <label for="type" >Type:</label>
+            <input type="type" class="form-control" id="type" name="type" value="{{pro[8]}}" disabled>
+                                
+        </div>
+        <div class="col-md-12">
+            <label for="title">Thesis Title:</label>           
+            <input type="title" class="form-control" id="title" name="title" value="{{pro[10]}}"  disabled>
+        </div>
+        {% endfor %} 
+    
+        
+        {% if scholarship %}
+        {% for s in scholarship%}
+        <div class="col-md-6">
+            <label for="scholar1" >Scholarship:</label>
+            <input type="scholar1" class="form-control" id="scholar1" name="scholar1" value="{{s[2]}}"  disabled >
+        </div>
+        <div class="col-md-6">
+            <label for="value1" >Scholarship Value:</label>
+            <input type="number" class="form-control" id="value1" name="value1" value="{{s[3]}}"  disabled> 
+        </div>
+
+        <div class="col-md-6">
+            <label for="tenure1">Scholarship Tenure:</label>
+            <input type="tenure1" class="form-control" id="tenure1" name="tenure1" value="{{s[4]}} " disabled  >
+        </div>
+        <div class="col-md-6">
+            <label for="enddate1">Scholarship End Date:</label>
+            <input type="date" class="form-control" id="enddate1" name="enddate1" value="{{s[6]}}" disabled>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <!-- <label><b>Employment at LU : provide details of hours/week and name of supervisor for employment</b></label> -->
+        {% if employment %}
+        {% for item in employment%}
+        
+        
+        <div class="col-md-12">
+            <label for="teaching" >Employment:</label>
+            <input type="text" class="form-control" id="teaching" name="teaching" value="{{item[2]}}" disabled>
+        </div>
+    
+        
+        
+        {% endfor %}
+        {% endif %}
+        <!-- supervisor -->
+        <div class="col-md-6">
+            
+            <label for="supervisor">Supervisor:</label>
+            <input type="text"  class="form-control" id="supervisor" name="supervisor" value="{{super1[0]}}" disabled>
+        </div>
+        <div class="col-md-6">
+            
+            <label for="supervisor">Associate Supervisor:</label>
+            <input type="text"  class="form-control" id="supervisor" name="supervisor" value="{% if super2 %}{{ super2[0] }}{% else %}{% endif %}" disabled>
+        </div>
+        
+        {% for value in super3 %}
+        <div class="col-md-4 mb-5">
+            
+            <label for="supervisor">Other Supervisor:</label>
+            <input type="text" class="form-control"id="supervisor" name="supervisor" value="{{value[0]}}" disabled>
+        </div>
+        {% endfor %}
+        <br>
+
+        <hr>     
+        <div class="d-flex justify-content-around">
+            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+            <!-- save all the info and return to home page with a succuss msg -->
+            <button type="submit" class="btn btn-outline-primary" name="action" value="save_sec_a">Save as draft</button>
+            <button type="submit" class="btn btn-outline-success" name="action" value="sectionb">Next</button>
+        </div>
+    </form>
+
+</div>
+
+<script>
+    // JavaScript code to change the form action based on button click
+    document.getElementById("myForm").addEventListener("submit", function(event) {
+        event.preventDefault();  // Prevent the form from submitting
+
+        var action = event.submitter.value;  // Get the value of the clicked button
+
+        // Set the form action based on the button value
+        if (action === "save_sec_a") {
+            this.action = "/student/save_sec_a";
+        } else if (action === "sectionb") {
+            this.action = "/student/sectionb";
+        }
+
+        this.submit();  // Submit the form with the updated action
+    });
+</script>
+
+{% endblock %}

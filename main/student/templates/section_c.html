@@ -1,0 +1,554 @@
+{% extends "student.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+<br>
+<h2>Section C: Evaluation of Faculty (or Centre) performance </h2>
+<hr>
+
+<div class="center">
+    <form id="myForm" method="POST" onsubmit="return validateForm()">
+        <fieldset class="savehistory">
+        <label><b>*Rate each of the following as they affect your study within the Faculty (or Centre). If you have any concerns about undertaking this evaluation then please go directly to section D and then complete section F.</b></label>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="access_principal" >Access to supervisors – principal	</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="access_principal" id="access_principal" class="form-select" aria-label="Default select example" required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good" {% if sectionc is defined and sectionc[0][0] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good" {% if sectionc is defined and sectionc[0][0] == 'Good' %} selected {% endif %}>Good</option>
+                    <option value="Satisfactory" {% if sectionc is defined and sectionc[0][0] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][0] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][0] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="form-floating">
+                    <textarea name="co_access_principal"class="form-control" placeholder="Leave a comment here" id="co_access_principal" required>{% if sectionc is defined   %}{{ sectionc[0][1] }}{% endif %}</textarea>
+                    <label for="co_access_principal">Comments </label>
+                </div>
+            </div>
+             <!-- for textarea no space !!!!!!!! -->
+            
+
+            <div class="col-md-4 mb-3">
+                <label for="access_others" >Access to supervisors – associate/others	</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="access_others" id="access_others" class="form-select" aria-label="Default select example" required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good"  {% if sectionc is defined and sectionc[0][2] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good" {% if sectionc is defined and sectionc[0][2] == 'Good' %} selected {% endif %}>Good</option>
+                    <option value="Satisfactory" {% if sectionc is defined and sectionc[0][2] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][2] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][2] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="form-floating mb-3">
+                    <textarea name="co_access_others"class="form-control" placeholder="Leave a comment here" id="co_access_others" required>{% if sectionc is defined   %}{{ sectionc[0][3] }}{% endif %}</textarea>
+                    <label for="co_access_others">Comments</label>
+                </div>
+            </div>
+            
+
+
+            <div class="col-md-4 mb-3">
+                <label for="ex_principal" >Supervisor expertise– principal	</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="ex_principal" id="ex_principal" class="form-select" aria-label="Default select example" required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good"  {% if sectionc is defined and sectionc[0][4] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good" {% if sectionc is defined and sectionc[0][4] == 'Good' %} selected {% endif %}>Good</option>
+                    <option value="Satisfactory" {% if sectionc is defined and sectionc[0][4] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][4] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][4] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+            <div class="form-floating mb-3">
+                <textarea name="co_ex_principal" class="form-control" placeholder="Leave a comment here" id="co_ex_principal" required>{% if sectionc is defined   %}{{ sectionc[0][5] }}{% endif %}</textarea>
+                <label for="co_ex_principal">Comments</label>
+            </div>
+            </div>
+
+
+            <div class="col-md-4 mb-3">
+                <label for="ex_others" >Supervisor expertise – associate/others	</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="ex_others" id="ex_others" class="form-select" aria-label="Default select example" required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good"  {% if sectionc is defined and sectionc[0][6] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good" {% if sectionc is defined and sectionc[0][6] == 'Good' %} selected {% endif %}>Good</option>
+                    <option value="Satisfactory" {% if sectionc is defined and sectionc[0][6] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][6] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][6] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+            <div class="form-floating mb-3">
+                <textarea name="co_ex_others" class="form-control" placeholder="Leave a comment here" id="co_ex_others" required>{% if sectionc is defined   %}{{ sectionc[0][7] }}{% endif %}</textarea>
+                <label for="co_ex_others">Comments</label>
+            </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="q_principal" >Quality of supervisor feedback – principal</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="q_principal" id="q_principal" class="form-select" aria-label="Default select example" required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good"  {% if sectionc is defined and sectionc[0][8] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good" {% if sectionc is defined and sectionc[0][8] == 'Good' %} selected {% endif %}>Good</option>
+                    <option value="Satisfactory" {% if sectionc is defined and sectionc[0][8] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][8] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][8] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+            <div class="form-floating mb-3">
+                <textarea name="co_q_principal" class="form-control" placeholder="Leave a comment here" id="co_q_principal" required>{% if sectionc is defined   %}{{ sectionc[0][9] }}{% endif %}</textarea>
+                <label for="co_q_principal">Comments</label>
+            </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="q_others" >Quality of supervisor feedback – associate/ others</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="q_others" id="q_others" class="form-select" aria-label="Default select example" required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good"  {% if sectionc is defined and sectionc[0][10] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good" {% if sectionc is defined and sectionc[0][10] == 'Good' %} selected {% endif %}>Good</option>
+                    <option value="Satisfactory" {% if sectionc is defined and sectionc[0][10] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][10] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][10] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+            <div class="form-floating mb-3">
+                <textarea name="co_q_others" class="form-control" placeholder="Leave a comment here" id="co_q_others" required>{% if sectionc is defined   %}{{ sectionc[0][11] }}{% endif %}</textarea>
+                <label for="co_q_others">Comments</label>
+            </div>
+            </div>
+
+
+            <div class="col-md-4 mb-3">
+                <label for="t_principal" >Timeliness of supervisor feedback – principal</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="t_principal" id="t_principal" class="form-select" aria-label="Default select example" required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good"  {% if sectionc is defined and sectionc[0][12] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good" {% if sectionc is defined and sectionc[0][12] == 'Good' %} selected {% endif %}>Good</option>
+                    <option value="Satisfactory" {% if sectionc is defined and sectionc[0][12] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][12] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][12] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+            <div class="form-floating mb-3">
+                <textarea name="co_t_principal" class="form-control" placeholder="Leave a comment here" id="co_t_principal" required>{% if sectionc is defined   %}{{ sectionc[0][13] }}{% endif %}</textarea>
+                <label for="co_t_principal">Comments</label>
+            </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="t_others" >Timeliness of supervisor feedback – associate/ others</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="t_others" id="t_others" class="form-select" aria-label="Default select example" required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good"  {% if sectionc is defined and sectionc[0][14] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good" {% if sectionc is defined and sectionc[0][14] == 'Good' %} selected {% endif %}>Good</option>
+                    <option value="Satisfactory" {% if sectionc is defined and sectionc[0][14] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][14] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][14] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+            <div class="form-floating mb-3">
+                <textarea class="form-control" placeholder="Leave a comment here" name="co_t_others" id="co_t_others" required>{% if sectionc is defined   %}{{ sectionc[0][15] }}{% endif %}</textarea>
+                <label for="co_t_others">Comments</label>
+            </div>
+            </div>
+            
+            
+            <div class="col-md-4 mb-3">
+                <label for="course" >Courses available</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="course" id="course" class="form-select" aria-label="Default select example" required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good"  {% if sectionc is defined and sectionc[0][16] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good" {% if sectionc is defined and sectionc[0][16] == 'Good' %} selected {% endif %}>Good</option>
+                    <option value="Satisfactory" {% if sectionc is defined and sectionc[0][16] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][16] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][16] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+            <div class="form-floating mb-3">
+                <textarea name="co_course" class="form-control" placeholder="Leave a comment here" id="co_course" required>{% if sectionc is defined   %}{{ sectionc[0][17] }}{% endif %}</textarea>
+                <label for="co_course">Comments</label>
+            </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="work" >Workspace</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="work" id="work" class="form-select" aria-label="Default select example" required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good"  {% if sectionc is defined and sectionc[0][18] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good" {% if sectionc is defined and sectionc[0][18] == 'Good' %} selected {% endif %}>Good</option>
+                    <option value="Satisfactory" {% if sectionc is defined and sectionc[0][18] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][18] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][18] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+            <div class="form-floating mb-3">
+                <textarea name="co_work" class="form-control" placeholder="Leave a comment here" id="co_work" required>{% if sectionc is defined   %}{{ sectionc[0][19] }}{% endif %}</textarea>
+                <label for="co_work">Comments</label>
+            </div>
+            </div>
+    
+            <div class="col-md-4 mb-3">
+                <label for="computer" >Computer facilities</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="computer" id="computer" class="form-select" aria-label="Default select example" required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good"  {% if sectionc is defined and sectionc[0][20] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good" {% if sectionc is defined and sectionc[0][20] == 'Good' %} selected {% endif %}>Good</option>
+                    <option value="Satisfactory" {% if sectionc is defined and sectionc[0][20] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][20] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][20] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+            <div class="form-floating mb-3">
+                <textarea name="co_computer" class="form-control" placeholder="Leave a comment here" id="co_computer" required>{% if sectionc is defined   %}{{ sectionc[0][21] }}{% endif %}</textarea>
+                <label for="co_computer">Comments</label>
+            </div>
+            </div>
+
+            
+
+
+            <div class="col-md-4 mb-3">
+                <label for="its" >ITS support</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="its" id="its" class="form-select" aria-label="Default select example" required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good"  {% if sectionc is defined and sectionc[0][22] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good" {% if sectionc is defined and sectionc[0][22] == 'Good' %} selected {% endif %}>Good</option>
+                    <option value="Satisfactory" {% if sectionc is defined and sectionc[0][22] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][22] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][22] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+            <div class="form-floating mb-3">
+                <textarea name="co_its" class="form-control" placeholder="Leave a comment here" id="co_its" required>{% if sectionc is defined   %}{{ sectionc[0][23] }}{% endif %}</textarea>
+                <label for="co_its">Comments</label>
+            </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="software" >Research software</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="software" id="software" class="form-select" aria-label="Default select example" required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good"  {% if sectionc is defined and sectionc[0][24] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good" {% if sectionc is defined and sectionc[0][24] == 'Good' %} selected {% endif %}>Good</option>
+                    <option value="Satisfactory" {% if sectionc is defined and sectionc[0][24] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][24] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][24] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+            <div class="form-floating mb-3">
+                <textarea name="co_software" class="form-control" placeholder="Leave a comment here" id="co_software" required>{% if sectionc is defined   %}{{ sectionc[0][25] }}{% endif %}</textarea>
+                <label for="co_software">Comments</label>
+            </div>
+            </div>
+            
+            <div class="col-md-4 mb-3">
+                <label for="library" >Library facilities</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="library" id="library" class="form-select" aria-label="Default select example" required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good"  {% if sectionc is defined and sectionc[0][26] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good"  {% if sectionc is defined and sectionc[0][26] == 'Good' %} selected {% endif %}>Good</option>
+                    <option value="Satisfactory" {% if sectionc is defined and sectionc[0][26] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][26] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][26] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+            <div class="form-floating mb-3">
+                <textarea name="co_library" class="form-control" placeholder="Leave a comment here" id="co_library" required>{% if sectionc is defined   %}{{ sectionc[0][27] }}{% endif %}</textarea>
+                <label for="co_library">Comments</label>
+            </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="teaching" >Teaching & Learning Centre support</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="teaching" id="teaching" class="form-select" aria-label="Default select example" required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good"  {% if sectionc is defined and sectionc[0][28] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good" {% if sectionc is defined and sectionc[0][28] == 'Good' %} selected {% endif %} >Good</option>
+                    <option value="Satisfactory" {% if sectionc is defined and sectionc[0][28] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][28] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][28] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+            <div class="form-floating mb-3">
+                <textarea name="co_teaching" class="form-control" placeholder="Leave a comment here" id="co_teaching" required>{% if sectionc is defined   %}{{ sectionc[0][29] }}{% endif %}</textarea>
+                <label for="co_teaching">Comments</label>
+            </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="statistical" >Statistical support</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="statistical" id="statistical" class="form-select" aria-label="Default select example" required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good"  {% if sectionc is defined and sectionc[0][30] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good" {% if sectionc is defined and sectionc[0][30] == 'Good' %} selected {% endif %}>Good</option>
+                    <option value="Satisfactory" {% if sectionc is defined and sectionc[0][30] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][30] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][30] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+            <div class="form-floating mb-3">
+                <textarea name="co_statistical" class="form-control" placeholder="Leave a comment here" id="co_statistical" required>{% if sectionc is defined   %}{{ sectionc[0][31] }}{% endif %}</textarea>
+                <label for="co_statistical">Comments</label>
+            </div>
+            </div>
+            
+            <div class="col-md-4 mb-3">
+                <label for="equip" >Research equipment</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="equip" id="equip" class="form-select" aria-label="Default select example" required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good"  {% if sectionc is defined and sectionc[0][32] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good" {% if sectionc is defined and sectionc[0][32] == 'Good' %} selected {% endif %}>Good</option>
+                    <option value="Satisfactory" {% if sectionc is defined and sectionc[0][32] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][32] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][32] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+            <div class="form-floating mb-3">
+                <textarea name="co_equip" class="form-control" placeholder="Leave a comment here" id="co_equip" required>{% if sectionc is defined   %}{{ sectionc[0][33] }}{% endif %}</textarea>
+                <label for="co_equip">Comments</label>
+            </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="tech" >Technical support</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="tech" id="tech" class="form-select" aria-label="Default select example" required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good"  {% if sectionc is defined and sectionc[0][34] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good" {% if sectionc is defined and sectionc[0][34] == 'Good' %} selected {% endif %}>Good</option>
+                    <option value="Satisfactory" {% if sectionc is defined and sectionc[0][34] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][34] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][34] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+            <div class="form-floating mb-3">
+                <textarea name="co_tech" class="form-control" placeholder="Leave a comment here" id="co_tech"required>{% if sectionc is defined   %}{{ sectionc[0][35] }}{% endif %}</textarea>
+                <label for="co_tech">Comments</label>
+            </div>
+            </div>
+            
+
+            <div class="col-md-4 mb-3">
+                <label for="financial" >Financial resources</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="financial" id="financial" class="form-select" aria-label="Default select example"required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good"  {% if sectionc is defined and sectionc[0][36] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good" {% if sectionc is defined and sectionc[0][36] == 'Good' %} selected {% endif %}>Good</option>
+                    <option value="Satisfactory"{% if sectionc is defined and sectionc[0][36] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][36] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][36] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+            <div class="form-floating mb-3">
+                <textarea name="co_financial" class="form-control" placeholder="Leave a comment here" id="co_financial" required>{% if sectionc is defined   %}{{ sectionc[0][37] }}{% endif %}</textarea>
+                <label for="co_financial">Comments</label>
+            </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="other" >Other (Please Specify)</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <select name="other" id="other" class="form-select" aria-label="Default select example" required>
+                    <option value="" disabled selected>select</option>
+                    <option value="Very Good"  {% if sectionc is defined and sectionc[0][38] == 'Very Good' %} selected {% endif %}>Very Good</option>
+                    <option value="Good" {% if sectionc is defined and sectionc[0][38] == 'Good' %} selected {% endif %}>Good</option>
+                    <option value="Satisfactory" {% if sectionc is defined and sectionc[0][38] == 'Satisfactory' %} selected {% endif %}>Satisfactory</option>
+                    <option value="Unsatisfactory" {% if sectionc is defined and sectionc[0][38] == 'Unsatisfactory' %} selected {% endif %}>Unsatisfactory</option>
+                    <option value="Not Relevant" {% if sectionc is defined and sectionc[0][38] == 'Not Relevant' %} selected {% endif %}>Not Relevant</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+            <div class="form-floating mb-3">
+                <textarea name="co_other" class="form-control" placeholder="Leave a comment here" id="co_other" required>{% if sectionc is defined   %}{{ sectionc[0][39] }}{% endif %}</textarea>
+                <label for="co_other">Comments</label>
+            </div>
+            </div>
+            <hr>
+            <div class="col-md-12 mb-3" >
+                <label for="">How frequently do you have a meeting with your supervisor?*:	</label>
+            </div>
+            <div class="col-md-12 mb-3">
+                <div class="form-check form-check-inline col-md-3 text-righ">
+                    <input class="form-check-input" type="radio" name="frequent" id="frequent" value="Weekly"  {% if sectionc is defined and sectionc[0][40] == 'Weekly' %} checked {% endif %} required>
+                    <label class="form-check-label" for="frequent1">Weekly</label>
+                </div>
+                
+                
+                <div class="form-check form-check-inline col-md-3 text-right mb-3">
+                    <input class="form-check-input" type="radio" name="frequent" id="frequent" value="Fortnightly"  {% if sectionc is defined and sectionc[0][40] == 'Fortnightly' %} checked {% endif %}  required>
+                    <label class="form-check-label" for="frequent2">Fortnightly</label>
+                </div>
+                
+                
+                <div class="form-check form-check-inline col-md-3 text-right mb-3">
+                    <input class="form-check-input" type="radio" name="frequent" id="frequent" value="Monthly"  {% if sectionc is defined and sectionc[0][40] == 'Monthly' %} checked {% endif %} required>
+                    <label class="form-check-label" for="frequent3">Monthly </label>
+                </div>
+            </div>
+            <div class="col-md-12 mb-3">
+                <div class="form-check form-check-inline col-md-3 text-right ">
+                    <input class="form-check-input" type="radio" name="frequent" id="frequent" value="Every 3 months"  {% if sectionc is defined and sectionc[0][40] == 'Every 3 months' %} checked {% endif %} required>
+                    <label class="form-check-label" for="frequent4">Every 3 months</label>
+                </div>
+
+                <div class="form-check form-check-inline col-md-3 text-right ">
+                    <input class="form-check-input" type="radio" name="frequent" id="frequent" value="Half yearly" {% if sectionc is defined and sectionc[0][40] == 'Half yearly' %} checked {% endif %} required>
+                    <label class="form-check-label" for="frequent5">Half yearly</label>
+                </div>
+
+                <div class="form-check form-check-inline col-md-3 text-right ">
+                    <input class="form-check-input" type="radio" name="frequent" id="frequent" value="Not at all" {% if sectionc is defined and sectionc[0][40] == 'Not at all' %} checked {% endif %} required >
+                    <label class="form-check-label" for="frequent6" >Not at all </label>
+                </div>
+                
+            </div>
+
+            <div class="col-md-12 mb-3">
+                <label for="">What is the usual period for receiving feedback from your supervisor on submitted materials?*:	</label>
+            </div>
+            <div class="col-md-12 mb-3">
+                <div class="form-check form-check-inline col-md-2 text-righ">
+                    <input class="form-check-input" type="radio" name="period" id="period" value="1 week"   {% if sectionc is defined and sectionc[0][41] == '1 week' %} checked {% endif %}  required>
+                    <label class="form-check-label" for="period" value="1 week" >1 week</label>
+                </div>
+                
+                
+                <div class="form-check form-check-inline col-md-2 text-righ">
+                    <input class="form-check-input" type="radio" name="period" id="period" value="2 weeks"  {% if sectionc is defined and sectionc[0][41] == '2 weeks' %} checked {% endif %} required>
+                    <label class="form-check-label" for="period" value="2 weeks">2 weeks</label>
+                </div>
+                
+                
+                <div class="form-check form-check-inline col-md-2 text-right">
+                    <input class="form-check-input" type="radio" name="period" id="period" value="1 month"  {% if sectionc is defined and sectionc[0][41] == '1 month' %} checked {% endif %}  required>
+                    <label class="form-check-label" for="period" value="1 month">1 month</label>
+                </div>
+
+                <div class="form-check form-check-inline col-md-2 text-right">
+                    <input class="form-check-input" type="radio" name="period" id="period" value="3 months" {% if sectionc is defined and sectionc[0][41] == '3 months' %} checked {% endif %}  required >
+                    <label class="form-check-label" for="period" value="3 months">3 months </label>
+                </div>
+                
+            </div>
+
+            <div class="col-md-12 mb-3">
+                <label for="feedback">How do you receive your feedback from your supervisor? (Tick more than one box if appropriate)*:</label>
+                <div class="form-check mb-3">
+                <input type="checkbox"  class="form-check-input" name="feedback" value="Softcopy" {% if sectionc is defined and 'Softcopy' in sectionc[0][42] %}checked{% endif %}>Softcopy</input>
+                </div>
+                <div class="form-check mb-3">
+                <input type="checkbox"  class="form-check-input" name="feedback" value="Comments on submitted material" {% if sectionc is defined and  'Comments on submitted material' in sectionc[0][42] %}checked{% endif %} >Comments on submitted material</input>
+                </div>
+                <div class="form-check mb-3">
+                <input type="checkbox"  class="form-check-input"  name="feedback" value="Verbally" {% if sectionc is defined and 'Verbally'in sectionc[0][42] %}checked{% endif %} >Verbally</input>
+                </div>
+                <div class="form-check mb-3">
+                <input type="checkbox"  class="form-check-input"  name="feedback" value="On a separate letter" {% if sectionc is defined and 'On a separate letter' in sectionc[0][42] %}checked{% endif %}>On a separate letter</input>
+                </div>
+            </div>
+
+            <hr>
+
+        </div>   
+        <div class="d-flex justify-content-around">
+            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+            <!-- save all the info and return to home page with a succuss msg -->
+            <button type="submit" class="btn btn-outline-primary" name="action" value="save_sec_c">Save as draft</button>
+            <button type="submit" class="btn btn-outline-success" name="action" value="section_d">Next</button>
+        </div>
+    </fieldset>
+        
+    </form>
+</div>
+
+<script>
+    // JavaScript code to change the form action based on button click
+    document.getElementById("myForm").addEventListener("submit", function(event) {
+        event.preventDefault();  // Prevent the form from submitting
+        
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        var checked = false;
+        
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+            checked = true;
+            break;
+            }
+        }
+        
+        if (!checked) {
+            alert("Please tick at least one box to proceed!");
+            return false;
+        }
+
+        var action = event.submitter.value;  // Get the value of the clicked button
+
+        // Set the form action based on the button value
+        if (action === "save_sec_c") {
+            this.action = "/student/save_sec_c";
+        } else if (action === "section_d") {
+            this.action = "/student/section_d";
+        }
+
+        this.submit();  // Submit the form with the updated action
+    });
+</script>
+
+{% endblock %}

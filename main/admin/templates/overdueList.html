@@ -1,0 +1,65 @@
+{% extends "admin.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+<div class="col">
+  <h2>Overdue Report List</h2>
+</div>
+<div class="container">
+    <form  action="/admin/overdueList" method="post">
+        <div class="row">
+            <div class="col">
+                <input id="studentName" name="studentName"  type="text" class="form-control" placeholder="Student Name" aria-label="Student Name">
+            </div>
+            <div class="col">
+                <input id="supervisorName" name="supervisorName"  type="text" class="form-control" placeholder="Supervisor Name" aria-label="Supervisor Name">
+            </div>
+            <div class="col">
+                <select class="form-select" name="dept_code">
+                  <option selected disabled>Department Name</option>
+                  <option value="DEM">Department of Environmental Management</option>
+                  <option value="DTSS">Department of Tourism, Sport and Society</option>
+                  <option value="SOLA">School of Landscape Architecture</option>
+                </select>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Search</button>
+                <button type="reset" class="btn btn-secondary">Reset</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="container">
+  <p>Click on "Pending" to see the detailed status of the report.</p>
+</div>
+  <table class="table table-bordered text-center table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Report ID</th>
+        <th scope="col">Student Name</th>
+        <th scope="col">Department Code</th>
+        <th scope="col">Supervisor Name</th>       
+        <th scope="col">Due date</th>
+        <th scope="col">Current Status</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% if overduelist %}
+            {% for item in overduelist %}
+            <tr>
+                <th scope="row">{{ item[0] }}</th>
+                <td>{{ item[2] }}</td>
+                <td>{{ item[3] }}</td>
+                <td>{{ item[4] }}</td> 
+                <td>{{ item[6] }}</td>
+                <td><a href="{{ url_for('admin.overdueCheck', report_id = item[0], student_id = item[1]) }}">{{ item[7] }}</a></td>
+            </tr>
+            {% endfor %}
+        {% else %}
+        <tr>
+          <td colspan="7">No result found</td>
+        </tr>
+        {% endif %}  
+    </tbody>
+  </table>
+{% endblock %}

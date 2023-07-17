@@ -1,0 +1,197 @@
+{% extends "chair.html" %}
+
+{% block greeting %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+
+<h2>{{ student_profile[34] }}'s Profile</h2>
+
+
+<!-- Personal information -->
+<div class="row">
+  <div class="col-md-6">
+      <h3>Personal Information</h3>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">Enrolment Date</th>
+            <td>{{ student_profile[3] }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Current Address</th>
+            <td>{{ student_profile[4] }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Thesis Title</th>
+            <td>{{ student_profile[10] }}</td>
+          </tr>
+
+<!-- Supervisors information -->
+           {% if Supervisor_list[0] %}
+          <th scope="row">Main Supervisor</th>
+          <td>{{ Supervisor_list[0][3] }}</td>
+          {% else %}
+          <th scope="row">Main Supervisor</th>
+          <td>none</td>
+          {% endif %}
+
+          {% if Supervisor_list[1] %}
+          <tr>
+          <th scope="row">Associate Supervisor</th>
+          <td>{{ Supervisor_list[1][3] }}</td>
+          </tr>
+          {% else %}
+          <tr>
+          <th scope="row">Associate Supervisor</th>
+          <td>none</td>
+          </tr>
+          {% endif %}
+
+          {% if Supervisor_list[2] %}
+          <tr>
+          <th scope="row">Co-Supervisor</th>
+          <td>{{ Supervisor_list[2][3] }}</td>
+          </tr>
+          {% else %}
+          <tr>
+          <th scope="row">Co-Supervisor</th>
+          <td>none</td>
+          </tr>
+          {% endif %}
+
+          {% if Supervisor_list[3] %}
+          <tr>
+          <th scope="row">Other Supervisor</th>
+          <td>{{ Supervisor_list[3][3] }}</td>
+          </tr>
+          {% else %}
+          <tr>
+          <th scope="row">Other Supervisor</th>
+          <td>none</td>
+          </tr>
+          {% endif %}
+
+          {% if Supervisor_list[4] %}
+          <tr>
+          <th scope="row">Advisor</th>
+          <td>{{ Supervisor_list[4][3] }}</td>
+          </tr>
+          {% else %}
+          <tr>
+          <th scope="row">Advisor</th>
+          <td>none</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+  </div>
+
+
+<!-- 6MR Reports information -->   
+  <div class="col-md-6">
+    <h3>Report Progress and Section F</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Report ID</th>
+        <th>Report Year</th>
+        <th>Report Term</th>
+        <th>Report Status</th>
+        <th>Student Status </th>
+        <th>Section F Comments</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for report in report_data %}
+      <tr>
+        <td>{{ report[11] }}</td>
+        <td>{{ report[13] }}</td>
+        <td>{{ report[14] }}</td>
+        {% if report[21] == 1 %}
+        <td>Completed</td>
+        {% else %}
+        <td>Incompleted</td>
+        {% endif %}
+
+        {% if report[27] == 'G' %}
+        <td><div style="width: 20px; height: 20px; background-color: green;"></div></td>
+        {% elif report[27] == 'O' %}
+        <td><div style="width: 20px; height: 20px; background-color: orange;"></div></td>
+        {% elif report[27] == 'R' %}
+        <td><div style="width: 20px; height: 20px; background-color: red;"></div></td>
+        {% endif %}
+
+        {% if report[31] %}
+        <td>Yes</td>
+        {% else %}
+        <td>No</td>
+        {% endif %}
+        
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- Employment information -->   
+
+<div class="row">
+  <div class="col-md-6">
+    <h3>Employment Details</h3>
+    <table class="table">
+      <thead>
+       <tr>
+        <th>Company Name</th>
+        <th>Employment Start Date</th>
+        <th>Employment End Date</th>
+     </tr>
+    </thead>
+    <tbody>
+      {% for employment in Employment_list %}
+      <tr>
+        <td>{{ employment[0] }}</td>
+        <td>{{ employment[1] }}</td>
+        <td>{{ employment[2] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody> 
+  </table>
+</div> 
+
+<!-- Scholarship information -->     
+          
+<div class="col-md-6">
+  <h3>Scholarship Details</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Scholarship Name</th>
+          <th>Scholarship Value</th>
+          <th>Scholarship Tenure</th>
+          <th>Scholarship Start Date</th>
+          <th>Scholarship End Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for scholarship in Scholarship_list %}
+        <tr>
+          <td>{{ scholarship[0] }}</td>
+          <td>{{ scholarship[1] }}</td>
+          <td>{{ scholarship[2] }}</td>
+          <td>{{ scholarship[3] }}</td>
+          <td>{{ scholarship[4] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>    
+  </div>    
+</div>
+
+</div>
+{% endblock %}

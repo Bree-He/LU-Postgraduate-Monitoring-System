@@ -1,0 +1,66 @@
+{% extends "supervisor.html" %}
+
+{% block greeting %}
+
+{% endblock %}
+
+{% block content %}
+<div class="container mt-3 mx-auto">
+  <form method="post">
+    <div class="row">
+      <div class="col">
+        <h2>Students List</h2>
+      </div>
+      <div class="col">
+        <input id="studentID" name="studentID" type="number" class="form-control" placeholder="Student ID" aria-label="Student ID" min="1">
+      </div>
+      <div class="col">
+        <input id="studentName" name="studentName" type="text" class="form-control" placeholder="Student Name" aria-label="Student Name">
+      </div>
+      <div class="col">
+        <button type="submit" class="btn btn-primary" formaction="/supervisor/supervisee_list">Search</button>
+      </div>
+    </div>
+  </form>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Student ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Email</th>
+          <th scope="col">Address</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if superviseeList %}
+          {% for supervisee in superviseeList %}
+            <tr>
+              <th scope="row">{{ supervisee[0] }}</th>
+              <td>{{ supervisee[1] }}</td>
+              <td>{{ supervisee[2] }}</td>
+              <td>{{ supervisee[3] }}</td>
+              <td>{{ supervisee[5] }}</td>
+              <td>
+                <a href="{{ url_for('supervisor.viewStudengDetail', student_id = supervisee[0])}}">
+                  <button type="button" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-badge-fill" viewBox="0 0 16 16">
+                      <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm4.5 0a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm5 2.755C12.146 12.825 10.623 12 8 12s-4.146.826-5 1.755V14a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-.245z"/>
+                    </svg>
+                  </button>
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="6" class="text-center">No result found</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div> 
+{% endblock %} 

@@ -1,0 +1,82 @@
+{% extends "supervisor.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+
+{% if success_message %}
+<!-- Show a success message if it exists -->
+<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+  {{ success_message }}
+</div>
+{% endif %}
+
+<div class="container mt-3 mx-auto">
+    {% for profile in suprofile %}
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="card">
+                    
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ profile[1] }} {{ profile[2] }}</h5>  
+                        <p> Please note only information with * can be modified </p>              
+                        <hr>                       
+                        <form action="/supervisor/suprofile" method="POST">
+                            <div class="form-group row mb-3">
+                                <label for="Date" class="col-sm-4 col-form-label">Employment Start Date</label>
+                                <div class="col-sm-8">
+                                    <input type="Date" class="form-control" id="Date" name="Date" value="{{ profile[3] }}"readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="role" class="col-sm-4 col-form-label">Role</label>
+                                <div class="col-sm-8">
+                                    <input type="role" class="form-control" id="role" name="role" value="{{ profile[4] }}"readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="Department" class="col-sm-4 col-form-label">Department</label>
+                                <div class="col-sm-8">
+                                    <input type="Department" class="form-control" id="Department" name="Department" value="{{ profile[8] }}"readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="Faculty" class="col-sm-4 col-form-label">Faculty</label>
+                                <div class="col-sm-8">
+                                    <input type="Faculty" class="form-control" id="Faculty" name="Faculty" value="{{ profile[9] }}"readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="room" class="col-sm-4 col-form-label">Room*</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="room" name="room" value="{{ profile[5] }}" maxlength="20" pattern="[a-zA-Z0-9\s]+" required>
+                                </div>
+                            </div>                            
+                            <div class="form-group row mb-3">
+                                <label for="email" class="col-sm-4 col-form-label">Email</label>
+                                <div class="col-sm-8">
+                                    <input type="email" class="form-control" id="email" name="email" value="{{ profile[6] }}" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="phone" class="col-sm-4 col-form-label">Contact Number*</label>
+                                <div class="col-sm-8">
+                                    <input type="tel" class="form-control" id="phone" name="phone" value="{{ profile[7]}}" pattern="[0-9]{9,11}" required placeholder="Enter phone number (9-11 digits)">
+                                </div>
+                            </div>                                                                     
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <button type="reset" class="btn btn-secondary float-left">Reset</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button type="submit" class="btn btn-primary float-right" onclick="return confirm('Are you sure you want to save your changes?')">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    {% endfor %}    
+</div>  
+{% endblock %}

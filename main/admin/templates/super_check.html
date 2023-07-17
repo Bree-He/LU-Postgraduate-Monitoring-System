@@ -1,0 +1,63 @@
+{% extends "admin.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+<div class="col">
+    <h2>6MR Status</h2>
+</div>
+<br>
+<br>
+<div class="container">
+
+    <table class="table table-bordered text-center table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Student ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Report ID</th>
+            <th scope="col">Section A-D</th>
+            <!-- <th scope="col">Section F</th> -->
+            <th scope="col">Supervisor who did not complete Section E</th>
+            
+            
+          </tr>
+        </thead>
+        <tbody>
+          {% if status %}
+            {% for item in status %}
+              <tr>
+                <th scope="row">{{ item[0] }}</th>
+                <td>{{ item[1] }}</td>
+                <td>{{ item[2] }}</td>
+                {% if item[3] == 0 %}
+                  <td><i class='fa-solid fa-xmark red-color'></i></td>
+                {% else %}
+                  <td><i class="fa-solid fa-check green-color" ></i></td>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+            <!-- undone supervisor -->
+
+                  <td>
+                    
+                    {{names}}
+                    
+      
+                  </td>
+                
+                
+              </tr>
+            
+          
+         
+      
+        </tbody>
+      </table>
+      <br>
+      <br>
+      <div class="d-grid gap-2 col-1 mx-auto">
+        <button type="submit" class="btn btn-primary" ><a class="b" href="{{ url_for('admin.checkstatus') }}">Back</a></button>
+      </div>
+</div>
+
+{% endblock %}

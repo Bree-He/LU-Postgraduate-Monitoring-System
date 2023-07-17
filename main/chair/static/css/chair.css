@@ -1,0 +1,67 @@
+.topbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  background: linear-gradient(to right, rgba(19, 19, 240, 0.9), rgba(70, 70, 236, 0.5));
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 90px;
+  margin-right: 10px;
+}
+h1{
+  color: aliceblue;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
+.footer {
+  position: absolute;
+  color: aliceblue;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(to right, rgba(19, 19, 240, 0.9), rgba(70, 70, 236, 0.5));
+}
+
+.link{
+  color: aliceblue;
+}
+
+
+h2 {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #0066CC;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+h3 {
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #0066CC;
+  margin-bottom: 50px;
+}
+
+.row, table {
+  padding: 20px;
+}
+
+thead {
+  background-color: #0f65bc;
+  color: white;
+}
+
+
+
+.container {
+  margin: 20px;
+}

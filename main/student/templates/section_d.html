@@ -1,0 +1,425 @@
+{% extends "student.html" %}
+{% block greeting %}{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.css">
+{% block content %}
+<br>
+<h2 class="report">PhD Student 6-Month Report Form</h2>
+<h2>Section D: Progress and Achievements</h2>
+<hr>
+<div class="container">
+    <p><u>*Assessment by student and supervisors</u></p>
+    <ul class="list-inline">
+        <li class="list-inline-item">This is an assessment of your progress and will be included in your postgraduate record.</li>
+        <li class="list-inline-item">It is intended primarily to assist you to plan and carry out your study.</li>
+        <li class="list-inline-item">The assessment is a documented record of your study and will illustrate your ability to define and achieve objectives.</li>
+        <li class="list-inline-item"><mark>Complete this after discussing it with your supervisor.</mark></li>
+    </ul>
+    <p><strong>Ensure you note and address any deviations from the standard 3-year PhD timeline. Add additional rows to these tables as necessary.</strong></p>
+</div>
+{% if message %}
+        <div class="alert alert-success">{{message}}</div>
+{% endif %}
+<div class="center">
+    <form id="myForm" method="POST">
+        <div class="table-wrapper-1">
+            <h4><b>(1)	Report on your Research Objectives for the last Six Months</b></h4>
+                <table class="table table-bordered">
+                    <tr class="text-center">    
+                        <th class="col-4">Research Objetives</th>
+                        <th>Status(Complete/Incomplete)</th>
+                        <th class="col-6">Comments-Explain, where relevant, why particular activities are not completed</th>
+                        <th>Add/Remove</th>
+                    </tr>
+                    {% if t1_list %}
+                        {%for index in range(t1_list|length)%}
+                            <tr>
+                                <td class="col-4"><input class="form-control" type="text" name="research_objectives" value="{{ t1_list[index].research_objectives }}" required/></td>
+                                <td>
+                                    <select class="form-select" name="status[]">
+                                        <option value="complete" {% if t1_list[index].status == 'complete' %}selected{% endif %}>Complete</option>
+                                        <option value="incomplete" {% if t1_list[index].status == 'incomplete' %}selected{% endif %}>Incomplete</option>
+                                    </select>
+                                </td>
+                                <td class="col-6"><input class="form-control" type="text" name="comments[]" value="{{ t1_list[index].comments }}"/></td>
+                                {% if index == 0 %}
+                                    <td class="text-center"><a href="javascript:void(0);" class="add-input" title="Add input"><i class="fa-solid fa-square-plus fa-xl"></i></a></td>
+                                {% else %}
+                                    <td class="text-center"><a href="javascript:void(0);" class="remove-input" title="Remove input"><i class="fa-solid fa-square-minus fa-xl"></i></a>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td class="col-4"><input class="form-control" type="text" name="research_objectives" value="" required/></td>
+                            <td>
+                                <select class="form-select" name="status[]">
+                                    <option value="complete">Complete</option>
+                                    <option value="incomplete">Incomplete</option>
+                                </select>
+                            </td>
+                            <td class="col-6"><input class="form-control" type="text" name="comments[]" value=""/></td>
+                            <td class="text-center"><a href="javascript:void(0);" class="add-input" title="Add input"><i class="fa-solid fa-square-plus fa-xl"></i></a></td>
+                        </tr>
+                    {% endif %}
+                </table>
+        </div>
+        <div>
+            <label for="comment_part_1"><b>Have any of these objectives changed or been modified since your Proposal?  If so, how, and why?</b></label>
+            <textarea name="comment_part_1"class="form-control" placeholder="Leave a comment here" required>{% if section_d is defined %}{{ section_d[0][2] }}{% endif %}</textarea>
+        </div>
+        <br>
+        <div class="table-wrapper-2">
+            <h4><b>(2)	Evaluation of effects of COVID-19 on research progress</b></h4>
+                <table class="table table-bordered">
+                    <tr class="text-center">
+                        <th>Detail any effects on your research plan of impacts such as travel restrictions, university closure including office or lab access, participant survey opportunities, financial hardship and social, emotional and mental well-being</th>
+                        <th>Add/Remove</th>
+                    </tr>
+                    {% if t2_list %}
+                        {% for index in range(t2_list|length) %}
+                            <tr class="text-center">    
+                                <td><input class="form-control" type="text" name="section_d_part_2" value="{{ t2_list[index].effects }}" required/></td>
+                                {% if index == 0 %}
+                                    <td class="text-center"><a href="javascript:void(0);" class="add-input" title="Add input"><i class="fa-solid fa-square-plus fa-xl"></i></a></td>
+                                {% else %}
+                                    <td class="text-center"><a href="javascript:void(0);" class="remove-input" title="Remove input"><i class="fa-solid fa-square-minus fa-xl"></i></a></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr class="text-center">    
+                            <td><input class="form-control" type="text" name="section_d_part_2" value="" required/></td>
+                            <td class="text-center"><a href="javascript:void(0);" class="add-input" title="Add input"><i class="fa-solid fa-square-plus fa-xl"></i></a></td>
+                        </tr>
+                    {% endif %}
+                </table>
+        </div>
+        <div class="table-wrapper-3">
+            <h4><b>(3)	Other Significant Academic Achievements in the last Six Months</b></h4>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>List other achievements including conference presentations, publications, workshops, posters etc</th>
+                        <th>Add/Remove</th>
+                    </tr>
+                    {% if t3_list %}
+                        {% for index in range(t3_list|length) %}
+                            <tr class="text-center">    
+                                <td><input class="form-control" type="text" name="section_d_part_3" value="{{ t3_list[index].achievements }}" required/></td>
+                                {% if index == 0 %}
+                                    <td class="text-center"><a href="javascript:void(0);" class="add-input" title="Add input"><i class="fa-solid fa-square-plus fa-xl"></i></a></td>
+                                {% else %}
+                                    <td class="text-center"><a href="javascript:void(0);" class="remove-input" title="Remove input"><i class="fa-solid fa-square-minus fa-xl"></i></a></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                    <tr class="text-center">    
+                        <td><input class="form-control" type="text" name="section_d_part_3" value="" required/></td>
+                        <td class="text-center"><a href="javascript:void(0);" class="add-input" title="Add input"><i class="fa-solid fa-square-plus fa-xl"></i></a></td>
+                    </tr>
+                    {% endif %}
+                </table>
+        </div>
+        <div class="table-wrapper-4">
+            <h4><b>(4)	Research Objectives for the next Six Months</b></h4>
+                <table class="table table-bordered">
+                    <tr class="text-center">    
+                        <th class="col-4">Research Objetives</th>
+                        <th>Target completion date</th>
+                        <th class="col-6">Anticipated problems in achieving objectives</th>
+                        <th>Add/Remove</th>
+                    </tr>
+                    {% if t4_list %}
+                        {% for index in range(t4_list|length) %}
+                            <tr>
+                                <td class="col-4"><input class="form-control" type="text" name="part_4_research_objectives" value="{{ t4_list[index].research_objectives }}" required/></td>
+                                <td><input class="form-control" type="date" name="target_date" value="{{ t4_list[index].target_date }}" required/></td>
+                                <td class="col-6"><input class="form-control" type="text" name="problems" value="{{ t4_list[index].problems }}" required/></td>
+                                {% if index == 0 %}
+                                    <td class="text-center"><a href="javascript:void(0);" class="add-input" title="Add input"><i class="fa-solid fa-square-plus fa-xl"></i></a></td>
+                                {% else %}
+                                    <td class="text-center"><a href="javascript:void(0);" class="remove-input" title="Remove input"><i class="fa-solid fa-square-minus fa-xl"></i></a></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td class="col-4"><input class="form-control" type="text" name="part_4_research_objectives" value="" required/></td>
+                            <td><input class="form-control" type="date" name="target_date" value="" required/></td>
+                            <td class="col-6"><input class="form-control" type="text" name="problems" value="" required/></td>
+                            <td class="text-center"><a href="javascript:void(0);" class="add-input" title="Add input"><i class="fa-solid fa-square-plus fa-xl"></i></a></td>
+                        </tr>
+                    {% endif %}
+                </table>
+        </div>
+        <div class="table-wrapper-5">
+            <h4><b>(5)	Expected Research Expenditure for the next Six Months</b></h4>
+                <table class="table table-bordered">
+                    <tr class="text-center">    
+                        <th class="col-4">Item</th>
+                        <th>Amount</th>
+                        <th class="col-5">Notes</th>
+                        <th>Add/Remove</th>
+                    </tr>
+                    {% if t5_list %}
+                        {% for index in range(t5_list|length) %}
+                        <tr>
+                            <td class="col-4"><input class="form-control" type="text" name="item" value="{{ t5_list[index].item }}" required/></td>
+                            <td><input class="form-control" type="number" name="amount" step="any" value="{{ t5_list[index].amount }}" required/></td>
+                            <td class="col-5"><input class="form-control" type="text" name="notes" value="{{ t5_list[index].notes }}" required/></td>
+                            {% if index == 0 %}
+                                <td class="text-center"><a href="javascript:void(0);" class="add-input" title="Add input"><i class="fa-solid fa-square-plus fa-xl"></i></a></td>
+                            {% else %}
+                                <td class="text-center"><a href="javascript:void(0);" class="remove-input" title="Remove input"><i class="fa-solid fa-square-minus fa-xl"></i></a></td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td class="col-4"><input class="form-control" type="text" name="item" value="" required/></td>
+                        <td><input class="form-control" type="number" name="amount" step="any" value="" required/></td>
+                        <td class="col-5"><input class="form-control" type="text" name="notes" value="" required/></td>
+                        <td class="text-center"><a href="javascript:void(0);" class="add-input" title="Add input"><i class="fa-solid fa-square-plus fa-xl"></i></a></td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <td class="text-align-right">TOTAL EXPENDITURE:</td>
+                        <td class="price" colspan="3"></td>
+                    </tr>
+                </table>
+                <div>
+                    <label for="comment_part_5"><b>Comments</b></label>
+                    <textarea name="comment_part_5"class="form-control" placeholder="Leave a comment here" required>{% if section_d is defined %}{{ section_d[0][7] }}{% endif %}</textarea>
+                </div>
+        </div>
+        <div class="row section_d">
+        <div class="col">
+            <label for="student_name"><b>Postgraduate's name:</b></label>
+            <input class="form-control" name="student_name" value="{% if section_d is defined %}{{ section_d[0][8] }}{% else %}{{ student_name }}{% endif %}" readonly>
+        </div>
+        <div class="col">
+            <label for="report_date"><b>Date:</b></label>
+            <input class="form-control" type="date" name="report_date" value="{% if section_d is defined %}{{ section_d[0][9] }}{% endif %}" required/>
+        </div>
+        </div>
+        <br>      
+        <div class="d-flex justify-content-around">
+            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+            <a href="{{ url_for('student.sectiona') }}" class="btn btn-outline-warning">Section A</a>
+            <a href="{{ url_for('student.sectionb') }}" class="btn btn-outline-warning">Section B</a>
+            <a href="{{ url_for('student.sectionc') }}" class="btn btn-outline-warning">Section C</a>
+            <!-- save all the info and return to home page with a succuss msg -->
+            <button type="submit" class="btn btn-outline-primary" name="action" value="save_sec_d">Save as draft</button>
+            <button type="submit" class="btn btn-outline-success" name="action" value="report_submit">Submit</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // JavaScript code to add/remove the columns dynamically for part 1
+$(document).ready(function(){
+    var maxInputFields = 6;
+    $('.table-wrapper-1').each(function() {
+        var tableWrapper = $(this);
+        var addInput = tableWrapper.find('.add-input');
+        var table = tableWrapper.find('.table');
+        var newInput = '<tr class="text-center"><td><input class="form-control" type="text" name="research_objectives" value=""/></td><td><select class="form-select" name="status[]"><option value="complete" selected>Complete</option><option value="incomplete">Incomplete</option></select></td><td><input class="form-control" type="text" name="comments[]" value=""/></td><td class="text-center"><a href="javascript:void(0);" class="remove-input" title="Remove input"><i class="fa-solid fa-square-minus fa-xl"></i></a></td></tr>';
+        var addInputCount = 1;
+        // add columns
+        addInput.click(function(){
+        if(addInputCount < maxInputFields){
+            addInputCount++;
+            table.append(newInput);
+            }
+        });
+        // remove columns
+        table.on('click', '.remove-input', function(e){
+        e.preventDefault();
+        $(this).closest('tr').remove();
+        addInputCount--;
+        });
+    });
+});      
+</script>
+
+<script>
+    // JavaScript code to add/remove the columns dynamically for part 2
+$(document).ready(function(){
+    var maxInputFields = 6;
+    $('.table-wrapper-2').each(function() {
+        var tableWrapper = $(this);
+        var addInput = tableWrapper.find('.add-input');
+        var table = tableWrapper.find('.table');
+        var newInput = '<tr class="text-center"><td><input class="form-control" type="text" name="section_d_part_2" value=""/></td><td class="text-center"><a href="javascript:void(0);" class="remove-input" title="Remove input"><i class="fa-solid fa-square-minus fa-xl"></i></a></td></tr>';
+        var addInputCount = 1;
+        // add columns
+        addInput.click(function(){
+        if(addInputCount < maxInputFields){
+            addInputCount++;
+            table.append(newInput);
+            }
+        });
+        // remove columns
+        table.on('click', '.remove-input', function(e){
+        e.preventDefault();
+        $(this).closest('tr').remove();
+        addInputCount--;
+        });
+    });
+});      
+</script>
+
+<script>
+    // JavaScript code to add/remove the columns dynamically for part 3
+$(document).ready(function(){
+    var maxInputFields = 6;
+    $('.table-wrapper-3').each(function() {
+        var tableWrapper = $(this);
+        var addInput = tableWrapper.find('.add-input');
+        var table = tableWrapper.find('.table');
+        var newInput = '<tr class="text-center"><td><input class="form-control" type="text" name="section_d_part_3" value=""/></td><td class="text-center"><a href="javascript:void(0);" class="remove-input" title="Remove input"><i class="fa-solid fa-square-minus fa-xl"></i></a></td></tr>';
+        var addInputCount = 1;
+        // add columns
+        addInput.click(function(){
+        if(addInputCount < maxInputFields){
+            addInputCount++;
+            table.append(newInput);
+            }
+        });
+        // remove columns
+        table.on('click', '.remove-input', function(e){
+        e.preventDefault();
+        $(this).closest('tr').remove();
+        addInputCount--;
+        });
+    });
+});      
+</script>
+
+<script>
+    // JavaScript code to add/remove the columns dynamically for part 4
+$(document).ready(function(){
+    var maxInputFields = 6;
+    $('.table-wrapper-4').each(function() {
+        var tableWrapper = $(this);
+        var addInput = tableWrapper.find('.add-input');
+        var table = tableWrapper.find('.table');
+        var newInput = '<tr class="text-center"><td><input class="form-control" type="text" name="part_4_research_objectives" value=""/></td><td><input class="form-control" type="date" name="target_date" value=""/></td><td><input class="form-control" type="text" name="problems" value=""/></td><td class="text-center"><a href="javascript:void(0);" class="remove-input" title="Remove input"><i class="fa-solid fa-square-minus fa-xl"></i></a></td></tr>';
+        var addInputCount = 1;
+        // add columns
+        addInput.click(function(){
+        if(addInputCount < maxInputFields){
+            addInputCount++;
+            table.append(newInput);
+            }
+        });
+        // remove columns
+        table.on('click', '.remove-input', function(e){
+        e.preventDefault();
+        $(this).closest('tr').remove();
+        addInputCount--;
+        });
+    });
+});      
+</script>
+
+<script>
+    // JavaScript code to add/remove the columns dynamically for part 5
+    $(document).ready(function(){
+        var maxInputFields = 6;
+        $('.table-wrapper-5').each(function() {
+            var tableWrapper = $(this);
+            var addInput = tableWrapper.find('.add-input');
+            var table = tableWrapper.find('.table');
+            var totalExpenditure = tableWrapper.find('.price'); // get total amount row
+            var newInput = '<tr class="text-center"><td><input class="form-control" type="text" name="item" value=""/></td><td><input class="form-control" type="number" name="amount" step="any" value=""/></td><td><input class="form-control" type="text" name="notes" value=""/></td><td class="text-center"><a href="javascript:void(0);" class="remove-input" title="Remove input"><i class="fa-solid fa-square-minus fa-xl"></i></a></td></tr>';
+            var addInputCount = 1;
+
+            addInput.click(function(){
+                if(addInputCount < maxInputFields){
+                    addInputCount++;
+                    $(newInput).insertBefore(table.find('tr:last'));
+                    calculateTotalAmount(tableWrapper);
+                }
+            });
+
+            table.on('click', '.remove-input', function(e){
+                e.preventDefault();
+                $(this).closest('tr').remove();
+                addInputCount--;
+                calculateTotalAmount(tableWrapper);
+            });
+
+            table.on('input', 'input[name="amount"]', function() {
+                calculateTotalAmount(tableWrapper);
+            });
+
+            // Calculate total amount initially when the page has data fetched
+            calculateTotalAmount(tableWrapper);
+        });
+
+        function calculateTotalAmount(tableWrapper) {
+            var totalAmount = 0;
+            tableWrapper.find('input[name="amount"]').each(function() {
+                var amount = parseFloat($(this).val()) || 0;
+                totalAmount += amount;
+            });
+            tableWrapper.find('.price').text(formatAmount(totalAmount));
+        }
+
+        function formatAmount(amount) {
+            var formattedAmount = amount.toFixed(2); // decimal "0.00"
+            formattedAmount = "$" + formattedAmount + "NZD"; // add "$" and "NZD"
+            return formattedAmount;
+        }
+    });
+</script>
+
+<script>
+    // JavaScript code to change the form action based on button click
+    document.getElementById("myForm").addEventListener("submit", function(event) {
+        event.preventDefault();  // Prevent the form from submitting
+        
+        // check part 1 comment column is not empty if the status is incomplete
+        var selectInputs = document.querySelectorAll('.table-wrapper-1 select[name="status[]"]');
+        var commentInputs = document.querySelectorAll('.table-wrapper-1 input[name="comments[]"]');
+        var isValid = true;
+
+        // check if all dynamic columns are satisfy with the validation
+        for (var i = 0; i < selectInputs.length; i++) {
+            var selectInput = selectInputs[i];
+            var commentInput = commentInputs[i];
+
+            if (selectInput.value === "incomplete" && commentInput.value.trim() === "") {
+                isValid = false;
+                alert("Comment is required for incomplete status.");
+                break;
+            }
+        }
+
+        if (isValid) {
+            var action = event.submitter.value;  // get the value of the clicked button
+
+            // set the form action based on the button value
+            if (action === "save_sec_d") {
+                this.action = "/student/save_sec_d";
+            } else if (action === "report_submit") {
+                // Show confirmation dialog to the user
+                var confirmResult = confirm("Once submitted, you can't modify the report! Or save it as a draft. Are you sure you want to proceed?");
+
+                if (confirmResult) {
+                    this.action = "/student/report_submit";
+                    this.submit();  // Submit the form with the updated action
+                } else {
+                    // User canceled the submission, do nothing
+                }
+                return;
+            }
+
+            this.submit();  // submit the form with the updated action
+        } else {
+            event.preventDefault();  // prevent the form from submitting
+        }
+    });
+</script>
+{% endblock %}

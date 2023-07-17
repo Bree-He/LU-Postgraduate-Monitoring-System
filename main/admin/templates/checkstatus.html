@@ -1,0 +1,138 @@
+{% extends "admin.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+<div class="col">
+  <h2>6MR Status</h2>
+</div>
+<div class="container">
+  <form  action="/admin/checkstatus" method="post">
+      <div class="row">
+        
+           <!--  -->
+           <input id="rept_term" name="rept_term" value="JUNE" type="text" aria-label="rept_term" hidden>
+           <input id="rept_year" name="rept_year" value="2023" type="text" aria-label="rept_year" hidden>
+          <div class="col">
+              <input id="student_id" name="student_id" value="{{student_id}}" type="text" class="form-control" placeholder="Student ID" aria-label="Student ID">
+          </div>
+          <div class="col">
+              <input id="studentName" name="studentName" value="{{studentName}}" type="text" class="form-control" placeholder="Student Name" aria-label="Student Name">
+          </div>
+          <div class="col">
+              <select class="form-select" name="r_status">
+                  <option disabled selected>Status</option>
+                  <option value="complete" {% if r_status == 1 %}selected{% endif %}>Complete</option>
+                  <option value="incomplete" {% if r_status == 0 %}selected{% endif %}>Incomplete</option>
+              </select>
+          </div>
+          <div class="col">
+              <select class="form-select" name="department">
+                  <option disabled selected>Department</option>
+                  <option value="DEM" {% if department == 'DEM' %}selected{% endif %}>Environmental Management</option>
+                  <option value="DTSS" {% if department == 'DTSS' %}selected{% endif %}>Tourism, Sport and Society</option>
+                  <option value="SOLA" {% if department == 'SOLA' %}selected{% endif %}>Landscape Architecture</option>
+              </select>
+          </div>
+          <div class="col">
+              <button type="submit" class="btn btn-primary">Search</button>
+          </div>
+      </div>
+  </form>
+</div>
+<!-- <form method="post">
+    <div class="row">
+      <div class="col">
+        <h2>Students List</h2>
+      </div>
+      <div class="col">
+        <input id="studentID" name="studentID" type="number" class="form-control" placeholder="Student ID" aria-label="Student ID">
+      </div>
+      <div class="col">
+        <input id="studentName" name="studentName" type="text" class="form-control" placeholder="Student Name" aria-label="Student Name">
+      </div>
+      <div class="col">
+        <input id="departmentCode" name="departmentCode" type="text" class="form-control" placeholder="Department Code" aria-label="Department Code">
+      </div>
+      <div class="col">
+        <button type="submit" class="btn btn-primary" formaction="/admin/studentlist">Search</button>
+      </div>
+    </div>
+  </form> -->
+
+  <table class="table table-bordered text-center table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Student ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Report ID</th>
+        <th scope="col">Section A-D</th>
+        <!-- <th scope="col">Section F</th> -->
+        <th scope="col">Supervisor</th>
+        <th scope="col">Convenor</th>
+        <th scope="col">6MR status</th>
+        <th scope="col">View</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if status %}
+        {% for item in status %}
+          <tr>
+            <th scope="row">{{ item[0] }}</th>
+            <td>{{ item[1] }}</td>
+            <td>{{ item[2] }}</td>
+            {% if item[3] == 0 %}
+              <td><i class='fa-solid fa-xmark red-color'></i></td>
+            {% else %}
+              <td><i class="fa-solid fa-check green-color" ></i></td>
+            {% endif %}
+
+            <!-- {% if item[4] == 0 %}
+              <td><i class='fa-solid fa-xmark red-color'></i></td>
+            {% else %}
+              <td><i class="fa-solid fa-check green-color" ></i></td>
+            {% endif %} -->
+
+            {% if item[5] == 0 %}
+              <td><a class="b" href="{{ url_for('admin.super_check', report_id=item[2]) }}"><i class="fa-solid fa-user-xmark red-color"></i></a></td>
+            {% else %}
+              <td><i class="fa-solid fa-check green-color" ></i></td>
+            {% endif %}
+
+            {% if item[6] == 0 %}
+              <td><i class='fa-solid fa-xmark red-color'></i></td>
+            {% else %}
+              <td><i class="fa-solid fa-check green-color" ></i></td>
+            {% endif %}
+
+            <!-- admin check all the previous!!!! -->
+            {% if item[6] == 0 %}
+              <td><i class='fa-solid fa-xmark red-color'></i></td>
+            
+            {% elif item[7]==1 %}
+              <td><i class="fa-solid fa-check green-color" ></i></td>
+            {% else %}
+              <td>
+                 <!-- add a new column for the edit button -->
+                <button class="btn btn-success btn-sm" onclick="return confirm('Are you sure you want to change the status to complete?');"><a class="b" href="{{ url_for('admin.ad_check', report_id=item[2]) }}">Complete</a></button>
+              </td>
+            {% endif %}
+
+
+              <td>
+                <button class="btn btn-warning btn-sm"> <a class="b" href="{{ url_for('admin.view6MR', report_id=item[2]) }}">View</a></button>
+              </td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="7">No result found</td>
+        </tr>
+      {% endif %}
+  
+    </tbody>
+  </table>
+  <br>
+  <div class="d-grid gap-2 col-2 mx-auto">
+    <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to save your changes?')"><a class="b" href="{{ url_for('admin.checkall') }}">One-click Completion</a></button>
+  </div>
+{% endblock %}

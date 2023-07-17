@@ -1,0 +1,214 @@
+{% extends "supervisor.html" %}
+
+{% block greeting %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-3 mx-auto">
+  {% if studentProfile %}
+  <div class="row">
+    <div class="col">
+      <h2>{{studentProfile[2] + " " + studentProfile[1]}}</h2>
+    </div>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="true">Profile</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="scholarship-tab" data-bs-toggle="tab" data-bs-target="#scholarship-tab-pane" type="button" role="tab" aria-controls="scholarship-tab-pane" aria-selected="false">Scholarship</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="employment-tab" data-bs-toggle="tab" data-bs-target="#employment-tab-pane" type="button" role="tab" aria-controls="employment-tab-pane" aria-selected="false">Employment</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="supervisor-tab" data-bs-toggle="tab" data-bs-target="#supervisor-tab-pane" type="button" role="tab" aria-controls="supervisor-tab-pane" aria-selected="false">Supervisor</button>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+        <div class="col-md-8" style="padding: 10px;">
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">ID</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{studentProfile[0]}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">First Name</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{studentProfile[1]}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Last Name</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{studentProfile[2]}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Enrollment Date</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{studentProfile[3]}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Address</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{studentProfile[4]}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Phone</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{studentProfile[5]}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Email LU</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{studentProfile[6]}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Email Other</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{studentProfile[7]}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Part/Full Time</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{studentProfile[8]}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Department</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{studentProfile[9]}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Thesis Title</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{studentProfile[10]}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="scholarship-tab-pane" role="tabpanel" aria-labelledby="scholarship-tab" tabindex="0">
+        <table class="table table-hover" style="margin: 10px;">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Value</th>
+              <th scope="col">Tenure</th>
+              <th scope="col">Starte Date</th>
+              <th scope="col">End Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if studentScholarship %}
+              {% for scholarship in studentScholarship %}
+                <tr>
+                  <td>{{ scholarship[1] }}</td>
+                  <td>$ {{ scholarship[2] }}</td>
+                  <td>{{ scholarship[3] }}</td>
+                  <td>{{ scholarship[4] }}</td>
+                  <td>{{ scholarship[5] }}</td>
+                </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="7">No scholarship record found</td>
+              </tr>
+            {% endif %}
+
+          </tbody>
+        </table>
+      </div>
+      <div class="tab-pane fade" id="employment-tab-pane" role="tabpanel" aria-labelledby="employment-tab" tabindex="0">
+        <table class="table table-hover" style="margin: 10px;">
+          <thead>
+            <tr>
+              <th scope="col">Company Name</th>
+              <th scope="col">Start Date</th>
+              <th scope="col">End Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if studentEmployment %}
+              {% for employment in studentEmployment %}
+                <tr>
+                  <td>{{ employment[1] }}</td>
+                  <td>{{ employment[2] }}</td>
+                  <td>{{ employment[3] }}</td>
+                </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="7">No employment record found</td>
+              </tr>
+            {% endif %}
+
+          </tbody>
+        </table>
+      </div>
+      <div class="tab-pane fade" id="supervisor-tab-pane" role="tabpanel" aria-labelledby="supervisor-tab" tabindex="0">
+        <table class="table table-hover" style="margin: 10px;">
+          <thead>
+            <tr>
+              <th scope="col">Supervisor Name</th>
+              <th scope="col">Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if studentSupervisor %}
+              {% for supervisor in studentSupervisor %}
+                <tr>
+                  <td>{{ supervisor[0] }}</td>
+                  <td>{{ supervisor[1] }}</td>
+                </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="7">No employment record found</td>
+              </tr>
+            {% endif %}
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}
+

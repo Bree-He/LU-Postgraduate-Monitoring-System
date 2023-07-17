@@ -1,0 +1,49 @@
+{% extends "admin.html" %}
+
+{% block greeting %}
+
+{% endblock %}
+
+{% block content %}
+<h2 style="color: #0066CC;  font-size:4ch;">Send Reminders</h2>
+<br>
+<form id="myForm" method="POST">
+    <div class="col-md-12 mb-3">
+        <label for="co_access_principal" class=" mb-3">Email Content: </label>
+        
+        <textarea name="co_access_principal"class="form-control textarea-lg" placeholder="Please leave message here" id="co_access_principal" required rows="10" required>{% if email_msg is defined %}{{email_msg[0]}}{% endif %}</textarea>
+        
+        
+    </div>
+    <div class="form-group row">
+        <div class="d-grid gap-2 col-2 mx-auto">
+            <button type="reset" class="btn btn-secondary float-left">Reset</button>
+        </div>
+        <div class="d-grid gap-2 col-2 mx-auto">
+            <button type="submit" class="btn btn-primary float-right" onclick="return confirm('Are you sure you want to send the reminder?')" name="action" value="send_student">Send to student</button>
+        </div>
+        <div class="d-grid gap-2 col-2 mx-auto">
+            <button type="submit" class="btn btn-primary float-right" onclick="return confirm('Are you sure you want to send the reminder?')" name="action" value="send_supervisor">Send to supervisor</button>
+        </div>
+    </div>
+
+</form>
+
+{% endblock %}
+<script>
+    // JavaScript code to change the form action based on button click
+    document.getElementById("myForm").addEventListener("submit", function(event) {
+        event.preventDefault();  // Prevent the form from submitting
+
+        var action = event.submitter.value;  // Get the value of the clicked button
+
+        // Set the form action based on the button value
+        if (action === "send_student") {
+            this.action = "/admin/reminder";
+        } else if (action === "send_supervisor") {
+            this.action = "/admin/send_supervisor";
+        }
+
+        this.submit();  // Submit the form with the updated action
+    });
+</script>

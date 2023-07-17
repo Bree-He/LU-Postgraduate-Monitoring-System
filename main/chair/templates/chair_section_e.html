@@ -1,0 +1,130 @@
+{% extends "chair.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+<br>
+<h2>Section E: Assessment of Student by PG Convenor</h2>
+
+<hr>
+
+<div class="center">
+    <form id="myForm" method="POST">
+        <div class="row" style="padding: 0;">
+            <div class="col">
+                <div class="row align-items-start">
+                    <div class="col-auto">
+                      <label for="studentName" class="col-form-label">Student Name</label>
+                    </div>
+                    <div class="col-auto">
+                      <input type="text" id="studentName" class="form-control" value="{{student[2] + ' ' + student[1]}}" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="row align-items-start">
+                    <div class="col-auto">
+                      <label for="studentName" class="col-form-label">Student ID</label>
+                    </div>
+                    <div class="col-auto">
+                      <input type="text" id="studentID" class="form-control" value="{{student[0]}}" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+       
+        <div class="row">
+            <div class="col">
+                <h3>PG Convenor (PG Chair)</h3>
+            </div>
+            <div class="col">
+                  <div class="col-auto">
+                    <input type="text" id="studentID" class="form-control" value="{{profile[2] + ' ' + profile[1]}}" disabled>
+                  </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <label><b>Highlight any area needing closer consideration:</b></label>
+            <textarea class="form-control" id="comment" name="comment" style="height: 200px;" required></textarea>
+        </div>
+        
+        <br>
+
+        <div class="row">
+            <div class="col">
+                <div class="col-md-12">
+                    <label for="" class="col-md-4"><b>Convenors to complete	</b></label>
+                    
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="green" value="G" required>
+                        <label class="form-check-label" for="inlineRadio1">Green</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="orange" value="O" required>
+                        <label class="form-check-label" for="inlineRadio2">Orange</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="red" value="R" required>
+                        <label class="form-check-label" for="inlineRadio3">Red</label>
+                      </div>
+                </div>
+            </div>
+            <div class="col">
+              <input type="date" class="form-control" id="date" name="date" placeholder="Date" required>
+            </div>
+        </div>
+        
+        <br>
+        <br>     
+        <hr> 
+        <div class="d-flex justify-content-around">
+            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Submit
+            </button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    Please confirm that you would like to submit the form
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-outline-success" name="action" value="sectione">Confirm Submission</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    // JavaScript code to change the form action based on button click
+    document.getElementById("myForm").addEventListener("submit", function(event) {
+        event.preventDefault();  // Prevent the form from submitting
+
+        var action = event.submitter.value;  // Get the value of the clicked button
+
+        // Set the form action based on the button value
+        if (action === "save_sec_b") {
+            this.action = "/student/save_sec_b";
+        } else if (action === "sectionc") {
+            this.action = "/student/sectionc";
+        }
+
+        this.submit();  // Submit the form with the updated action
+    });
+
+</script>
+
+
+{% endblock %}
